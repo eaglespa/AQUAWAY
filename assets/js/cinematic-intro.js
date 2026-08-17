@@ -1,65 +1,36 @@
 /**
- * 🎬 AQUAWAY TOURS — 3-SECOND HOLLYWOOD CINEMATIC BRAND FILM & STUDIO IDENT
+ * 🎬 AQUAWAY TOURS — BLOCKBUSTER CINEMATIC INTRO (V4)
  * ===========================================================================
- * Master Film Production Engine v9.0 [Hollywood Feature Director Standard]
+ * Full-screen Hollywood studio ident:
+ *   Clapperboard slate -> Act I The Deep (AQUA) -> Act II The Desert (WAY)
+ *   -> Act III The Sunset (TOURS) -> AQUAWAY / TOURS lockup with golden ring
+ *   + circular logo, fireworks finale, anamorphic flares, liquid-gold pour.
  *
- * Story Arc:
- *   ONE WOMAN · ONE JOURNEY · ONE MEMORY · ONE ICONIC BRAND
- *
- * The 3-Second Master Timeline:
- *   0.00–0.45s: SHOT 01 — ESCAPE (Passport grab, eye reflection, door flood) ─────────► ☀️ GOLD OVEREXPOSURE
- *   0.45–0.75s: SHOT 02 — FLIGHT (Airplane window, clouds part, sea reveal) ────────► 🌊 CLOUDS TO SEA MATCH
- *   0.75–1.10s: SHOT 03 — RED SEA (Yacht bow, wind in hair, camera dive) ───────────► 💧 WATER DIVE MATCH
- *   1.10–1.40s: SHOT 04 — UNDERWATER (Caustics, dolphin pass, camera tilts up) ─────► ☀️ SUNBURST OVEREXPOSURE
- *   1.40–1.70s: SHOT 05 — DESERT (Sahara dunes, 4x4 ridge, sand whip across lens) ──► 🏜️ SAND WHIP MATCH
- *   1.70–2.05s: SHOT 06 — PYRAMIDS (Great Giza Pyramids, golden haze, awe) ─────────► 🏛️ SUNLIGHT MATCH
- *   2.05–2.30s: SHOT 07 — LUXOR (Ancient pillars, hand on stone, Nile reflection) ──► 🌅 NILE REFLECTION
- *   2.30–2.65s: THE MEMORY (Eye -> Sea -> Underwater -> Desert -> Pyramids -> Eye) ─► ⚡ ACCELERATED CUTS
- *   2.65–2.95s: THE TRANSFORMATION (Sudden Silence, gold stardust field, camera fly)► ✨ PARTICLE VORTEX
- *   2.95–3.35s: AQUAWAY TOURS (Studio Ident, royal gold edge light, light sweep) ──► 👑 ICONIC CREST
- *   3.35–3.50s: FINAL IMPACT (Light impact boom, fly-through into live website) ─────► 🚀 HOMEPAGE HERO
- *
- * Audio: Multi-layer Web Audio Cinematic Trailer Sound Studio + Live Site Audio Sync
+ * Audio: Web Audio synth SFX + 2s music sting from assets/3.mp3.
+ * Runs once per session on the homepage; skippable; honors reduced motion.
+ * Hands off to the site music player (window.aquawayMusic) on completion.
  */
-(function AquawayHollywoodMaster() {
+(function AquawayBlockbuster() {
   'use strict';
 
-  /* ─── 1. CORE PARAMETERS ─── */
-  var TOTAL_DURATION  = 3000;   // Exactly 3.00 Seconds
-  var RETURN_DURATION =  850;   // 0.85s on repeat visits
-  var SKIP_ANIM_TIME  =  300;   // 300ms fast exit on skip
-  var STORAGE_KEY     = 'aqw_hollywood_seen_v9';
-
-  var COLORS = {
-    black:        '#000000',
-    deepNavy:     '#020612',
-    spaceBlue:    '#04091a',
-    goldRoyal:    '#D4AF37',
-    goldBright:   '#FFD700',
-    goldChampagne:'#F5E7B2',
-    goldDark:     '#8c6d1d',
-    turquoise:    '#00B8C8',
-    aqua:         '#00D5E8',
-    warmWhite:    '#FFF9EA'
-  };
-
-  /* ─── 2. RUNTIME CHECKS ─── */
+  /* ─── 1. RUNTIME GUARDS ─── */
+  var STORAGE_KEY = 'aqw_blockbuster_seen_v1';
   var prefersReducedMotion =
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var isReturning = false;
-  try {
-    isReturning = sessionStorage.getItem(STORAGE_KEY) === '1';
-  } catch (e) {}
+  try { isReturning = sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+
+  if (isReturning || prefersReducedMotion) return;
 
   var isIndexPage = (function () {
     var p = window.location.pathname;
     return p === '/' || p.endsWith('/index.html') ||
       p.endsWith('.tours/') || p === '';
   })();
-
   if (!isIndexPage) return;
 
+  /* ─── 2. ASSET BASE PATH (works at any page depth) ─── */
   function getBasePath() {
     var scripts = document.getElementsByTagName('script');
     for (var i = 0; i < scripts.length; i++) {
@@ -71,1125 +42,1154 @@
     return './';
   }
   var BASE_URL = getBasePath();
-  var AUDIO_URL = BASE_URL + 'assets/3.mp3';
+  var MUSIC_URL = BASE_URL + 'assets/3.mp3';
+  var LOGO_URL = BASE_URL + 'assets/images/logo.webp';
 
-  /* ─── 3. EASING CURVES ─── */
-  var Ease = {
-    inCubic:    function(t) { return t * t * t; },
-    outCubic:   function(t) { return 1 - Math.pow(1 - t, 3); },
-    inOutCubic: function(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; },
-    outExpo:    function(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
-    inExpo:     function(t) { return t === 0 ? 0 : Math.pow(2, 10 * t - 10); }
-  };
+  /* ─── 3. SCOPED CSS INJECTION ─── */
+  var css = `
+#aqw-cinematic-intro {
+  position: fixed; inset: 0; z-index: 999999; background: #050505;
+  overflow: hidden; user-select: none; pointer-events: all;
+  will-change: opacity;
+  --gold: #d4af37; --gold-b: #ffe9a8; --gold-d: #8a6d1f;
+  --aqua: #00e0ff; --aqua-d: #0077ff; --bg: #050505;
+  font-family: Inter, sans-serif;
+}
+#aqw-cinematic-intro * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  function lerp(a, b, t)    { return a + (b - a) * t; }
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-  function norm(v, lo, hi)  { return clamp((v - lo) / (hi - lo), 0, 1); }
+#aqw-cinematic-intro .stage {
+  position: absolute; inset: 0; overflow: hidden; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  animation: aqiCamDrift 10.4s cubic-bezier(.25,.6,.35,1) both;
+}
+#aqw-cinematic-intro .layer { position: absolute; inset: 0; pointer-events: none; }
 
-  /* ─── 4. THEATRICAL TRAILER SOUND DESIGN (WEB AUDIO + SITE MUSIC) ─── */
-  var AudioEngine = (function() {
-    var bgAudio = null;
-    var ctx = null;
-    var masterGain = null;
-    var isMuted = false;
-    var cues = {
-      sub: false,
-      plane: false,
-      ocean: false,
-      underwater: false,
-      desert: false,
-      pyramids: false,
-      luxor: false,
-      whips: {},
-      silence: false,
-      impact: false
-    };
+#aqw-cinematic-intro .grain {
+  z-index: 60; opacity: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+#aqw-cinematic-intro.st-boot .grain { animation: aqiGrainJit .35s steps(2) infinite, aqiGrainFadeIn .9s ease forwards; }
 
-    function initAudio() {
-      if (!bgAudio) {
-        bgAudio = new Audio(AUDIO_URL);
-        bgAudio.loop = false;
-        bgAudio.volume = 0.82;
-        bgAudio.preload = 'auto';
-        var p = bgAudio.play();
-        if (p !== undefined) {
-          p.catch(function() {});
-        }
-        // Auto-fade and stop intro audio at exactly 3 seconds
-        setTimeout(function() {
-          if (!bgAudio) return;
-          var fadeSteps = 20;
-          var fadeInterval = setInterval(function() {
-            if (!bgAudio || bgAudio.paused) { clearInterval(fadeInterval); return; }
-            bgAudio.volume = Math.max(0, bgAudio.volume - (0.82 / fadeSteps));
-            if (bgAudio.volume <= 0) {
-              bgAudio.pause();
-              bgAudio.currentTime = 0;
-              clearInterval(fadeInterval);
-            }
-          }, 15);
-        }, 2700); // Start fading 300ms before the 3s mark
-      }
+#aqw-cinematic-intro .vignette { z-index: 59; background: radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,.88) 100%); }
 
-      if (!ctx) {
-        try {
-          var AudioCtx = window.AudioContext || window.webkitAudioContext;
-          if (AudioCtx) {
-            ctx = new AudioCtx();
-            masterGain = ctx.createGain();
-            masterGain.gain.setValueAtTime(isMuted ? 0 : 0.85, ctx.currentTime);
-            masterGain.connect(ctx.destination);
-          }
-        } catch (e) {}
-      }
-    }
+#aqw-cinematic-intro .bar { position: absolute; left: 0; width: 100%; height: 10vh; background: #000; z-index: 58; transform: scaleY(0); }
+#aqw-cinematic-intro .bar-top { top: 0; transform-origin: top; }
+#aqw-cinematic-intro .bar-bottom { bottom: 0; transform-origin: bottom; }
+#aqw-cinematic-intro.st-boot .bar-top { animation: aqiBarIn .8s .1s cubic-bezier(.7,0,.2,1) forwards; }
+#aqw-cinematic-intro.st-boot .bar-bottom { animation: aqiBarIn .8s .1s cubic-bezier(.7,0,.2,1) forwards; }
 
-    function ensureRunning() {
-      if (bgAudio && bgAudio.paused && !isMuted) {
-        bgAudio.play().catch(function() {});
-      }
-      if (ctx && ctx.state === 'suspended') {
-        ctx.resume().catch(function() {});
-      }
-    }
+#aqw-cinematic-intro .tc {
+  position: absolute; z-index: 70; bottom: 4vh; left: 18px;
+  font-family: 'Courier New', monospace; font-size: 12px; letter-spacing: .14em;
+  color: rgba(255,255,255,.5); display: flex; align-items: center; gap: 8px;
+  opacity: 0;
+}
+#aqw-cinematic-intro.st-tc .tc { opacity: 1; transition: opacity .6s ease; }
+#aqw-cinematic-intro .rec { width: 8px; height: 8px; border-radius: 50%; background: #ff4d4d;
+  box-shadow: 0 0 8px #ff4d4d; animation: aqiRecBlink 1s steps(2) infinite; }
 
-    // 0.00s Low Cinematic Rumble (38Hz)
-    function playSubRumble() {
-      if (!ctx || isMuted || cues.sub) return;
-      cues.sub = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(38, now);
-        osc.frequency.exponentialRampToValueAtTime(62, now + 1.2);
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.60, now + 0.3);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 1.9);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .actcap {
+  position: absolute; bottom: 14vh; left: 50%; transform: translateX(-50%);
+  font-size: clamp(10px, 1.4vw, 14px); letter-spacing: .5em; text-transform: uppercase;
+  color: rgba(200,200,200,.65); opacity: 0; z-index: 41; white-space: nowrap;
+}
+#aqw-cinematic-intro.st-cap1 .cap1, #aqw-cinematic-intro.st-cap2 .cap2, #aqw-cinematic-intro.st-cap3 .cap3 { animation: aqiCapShow 2.4s ease both; }
 
-    // 0.45s Air Turbine Swell
-    function playPlaneWhoosh() {
-      if (!ctx || isMuted || cues.plane) return;
-      cues.plane = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        var flt = ctx.createBiquadFilter();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(68, now);
-        osc.frequency.exponentialRampToValueAtTime(140, now + 0.35);
-        flt.type = 'lowpass';
-        flt.frequency.setValueAtTime(240, now);
-        flt.frequency.exponentialRampToValueAtTime(1200, now + 0.3);
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.35, now + 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-        osc.connect(flt);
-        flt.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.5);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .clapboard {
+  position: absolute; left: 50%; top: 50%; z-index: 56;
+  width: min(540px, 80vw); height: clamp(150px, 27vh, 230px);
+  transform: translate(-50%, -50%) rotate(-5deg) scale(1.12);
+  opacity: 0; box-shadow: 0 30px 80px rgba(0,0,0,.7);
+}
+#aqw-cinematic-intro .cb-top {
+  height: 60%; background: #0d0d0d; border: 2px solid var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+#aqw-cinematic-intro .cb-top .cb-title {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 900;
+  font-size: clamp(26px, 4.6vw, 52px); letter-spacing: .12em; color: var(--gold);
+  background: linear-gradient(100deg, var(--gold-d), var(--gold) 40%, var(--gold-b) 50%, var(--gold) 60%, var(--gold-d));
+  background-size: 220% auto; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; animation: aqiTextShimmer 3s linear infinite;
+}
+#aqw-cinematic-intro .cb-top .cb-pres {
+  font-size: clamp(9px, 1.4vw, 13px); letter-spacing: .6em; color: #9a9a9a; text-transform: uppercase;
+}
+#aqw-cinematic-intro .cb-stripes {
+  height: 15%; background: repeating-linear-gradient(45deg, var(--gold) 0 16px, #0d0d0d 16px 32px);
+  border-left: 2px solid var(--gold); border-right: 2px solid var(--gold);
+}
+#aqw-cinematic-intro .cb-bottom {
+  height: 25%; background: #e9d9a0; color: #141005; display: flex; align-items: center;
+  justify-content: center; letter-spacing: .34em; text-transform: uppercase;
+  font-size: clamp(9px, 1.5vw, 14px); font-weight: 600;
+}
+#aqw-cinematic-intro.st-kicker .clapboard { animation: aqiCbIn .55s cubic-bezier(.15,.9,.25,1.15) both; }
+#aqw-cinematic-intro.st-kicker-off .clapboard { animation: aqiCbOut .55s cubic-bezier(.6,0,.7,1) both; }
 
-    // 0.75s Ocean Swell
-    function playOceanSwell() {
-      if (!ctx || isMuted || cues.ocean) return;
-      cues.ocean = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(220, now);
-        osc.frequency.linearRampToValueAtTime(140, now + 0.35);
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.30, now + 0.12);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.5);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .clap { z-index: 52; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(circle at 50% 45%, #fff 0%, rgba(255,255,255,.85) 30%, transparent 70%);
+}
+#aqw-cinematic-intro.st-clap .clap { animation: aqiClapFlash .45s ease both; }
 
-    // 1.10s Underwater Muffled Dive
-    function playUnderwaterFilter() {
-      if (!ctx || isMuted || cues.underwater) return;
-      cues.underwater = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(90, now);
-        osc.frequency.exponentialRampToValueAtTime(50, now + 0.3);
-        gain.gain.setValueAtTime(0.40, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.4);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .flash { z-index: 52; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(circle at 50% 45%, #fff 0%, rgba(255,255,255,.9) 34%, rgba(255,255,255,.15) 62%, transparent 78%);
+}
+#aqw-cinematic-intro.st-quickflash .flash { animation: aqiFlashQuick .5s ease both; }
+#aqw-cinematic-intro.st-megaflash .flash { animation: aqiFlashMega .85s ease both; }
 
-    // 1.70s Pyramids Cinematic Low Impact (55Hz)
-    function playPyramidsImpact() {
-      if (!ctx || isMuted || cues.pyramids) return;
-      cues.pyramids = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(55, now);
-        osc.frequency.exponentialRampToValueAtTime(32, now + 0.45);
-        gain.gain.setValueAtTime(0.55, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.6);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .anamorph { position: absolute; left: 0; right: 0; top: 42%; height: 2px; opacity: 0;
+  background: linear-gradient(90deg, transparent, rgba(130,200,255,0) 28%, rgba(150,215,255,.9) 50%, rgba(130,200,255,0) 72%, transparent);
+  filter: blur(1px); box-shadow: 0 0 16px rgba(150,215,255,.65);
+}
+#aqw-cinematic-intro.st-anam1 .anamorph, #aqw-cinematic-intro.st-anam2 .anamorph { animation: aqiAnamSweep 1.35s cubic-bezier(.4,0,.3,1) both; }
 
-    // 2.30s Fast Acoustic Whip on Memory Cut
-    function playMemoryWhip(id) {
-      if (!ctx || isMuted || cues.whips[id]) return;
-      cues.whips[id] = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(780, now);
-        osc.frequency.exponentialRampToValueAtTime(140, now + 0.06);
-        gain.gain.setValueAtTime(0.22, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.08);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .iris { position: absolute; left: 50%; top: 50%; z-index: 45;
+  width: 150vmax; height: 150vmax; border-radius: 50%; background: #000;
+  transform: translate(-50%, -50%) scale(0); opacity: 0;
+}
+#aqw-cinematic-intro.st-iris1 .iris { animation: aqiIrisCloseOpen 1.15s cubic-bezier(.7,0,.3,1) both; }
+#aqw-cinematic-intro.st-iris2 .iris { animation: aqiIrisCloseOpen 1.15s cubic-bezier(.7,0,.3,1) both; }
 
-    // 2.65s Sudden Silence Drop (Pre-Climax Tension)
-    function playSilenceDrop() {
-      if (!ctx || isMuted || cues.silence) return;
-      cues.silence = true;
-      try {
-        var now = ctx.currentTime;
-        masterGain.gain.cancelScheduledValues(now);
-        masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-        masterGain.gain.exponentialRampToValueAtTime(0.05, now + 0.12);
-        masterGain.gain.setValueAtTime(0.85, now + 0.30);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .streak { z-index: 53; opacity: 0; width: 55vmax; height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.95) 50%, transparent);
+  transform: rotate(-22deg) translateX(-130%);
+}
+#aqw-cinematic-intro .streak.s2 { height: 1.5px; background: linear-gradient(90deg, transparent, rgba(255,215,130,.7) 50%, transparent); top: 54%; }
+#aqw-cinematic-intro.st-streak .streak { animation: aqiStreakSweep 1.15s cubic-bezier(.5,0,.3,1) both; }
+#aqw-cinematic-intro.st-streak .streak.s2 { animation-delay: .14s; }
 
-    // 2.95s Master Logo Impact (380Hz -> 38Hz + Crystal Anamorphic Chime)
-    function playLogoImpact() {
-      if (!ctx || isMuted || cues.impact) return;
-      cues.impact = true;
-      ensureRunning();
-      try {
-        var now = ctx.currentTime;
+#aqw-cinematic-intro.st-shake { animation: aqiCamShake .45s linear both; }
+#aqw-cinematic-intro.st-shake3 { animation: aqiCamShake3 .6s linear both; }
 
-        // Sub Impact Boom
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(380, now);
-        osc.frequency.exponentialRampToValueAtTime(36, now + 0.55);
-        gain.gain.setValueAtTime(0.85, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 0.9);
+#aqw-cinematic-intro .sc { z-index: 1; opacity: 0; transition: opacity .9s ease; }
+#aqw-cinematic-intro.st-bg-deep .sc-deep { opacity: 1; animation: aqiPlxIn 7s ease-out both; }
+#aqw-cinematic-intro.st-bg-gold .sc-gold { opacity: 1; animation: aqiPlxIn 6s ease-out both; }
+#aqw-cinematic-intro.st-bg-sunset .sc-sunset { opacity: 1; animation: aqiPlxIn 6s ease-out both; }
+#aqw-cinematic-intro.st-bg-night .sc-night { opacity: 1; animation: aqiPlxIn 8s ease-out both; }
 
-        // Crystal Anamorphic Shimmer
-        var chime = ctx.createOscillator();
-        var chimeG = ctx.createGain();
-        chime.type = 'sine';
-        chime.frequency.setValueAtTime(1760, now);
-        chime.frequency.exponentialRampToValueAtTime(2637, now + 0.6);
-        chimeG.gain.setValueAtTime(0.20, now);
-        chimeG.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
-        chime.connect(chimeG);
-        chimeG.connect(masterGain);
-        chime.start(now);
-        chime.stop(now + 0.8);
-      } catch (e) {}
-    }
+#aqw-cinematic-intro .sc-deep { background: radial-gradient(ellipse at 50% 44%, #06233f 0%, #04101f 60%, #02060d 100%); }
+#aqw-cinematic-intro .sc-deep .godrays {
+  position: absolute; inset: -40% -30%;
+  background: repeating-conic-gradient(from 12deg at 50% 0%, rgba(0,190,255,.10) 0deg 6deg, transparent 6deg 20deg);
+  filter: blur(6px); animation: aqiRaysSpin 40s linear infinite;
+}
+#aqw-cinematic-intro .sc-deep .caustics {
+  position: absolute; inset: -30%;
+  background:
+    radial-gradient(circle at 22% 38%, rgba(120,230,255,.18) 0 2%, transparent 3.2%),
+    radial-gradient(circle at 58% 22%, rgba(0,224,255,.22) 0 2.5%, transparent 4%),
+    radial-gradient(circle at 78% 62%, rgba(120,230,255,.14) 0 2%, transparent 3%),
+    radial-gradient(circle at 38% 76%, rgba(0,190,255,.20) 0 2%, transparent 3.6%);
+  background-size: 500px 500px, 430px 430px, 580px 580px, 470px 470px;
+  mix-blend-mode: screen; filter: blur(1.5px); opacity: .55;
+  animation: aqiCausticDrift 10s linear infinite;
+}
+#aqw-cinematic-intro .sc-deep .wave { position: absolute; left: 0; bottom: 0; width: 100%; height: 26%; opacity: .5; }
+#aqw-cinematic-intro .sc-deep .wave.w2 { bottom: -6%; height: 30%; opacity: .3; }
+#aqw-cinematic-intro .sc-deep .wave svg { width: 200%; height: 100%; animation: aqiWaveDrift 12s linear infinite; }
+#aqw-cinematic-intro .sc-deep .wave.w2 svg { animation-duration: 17s; }
 
-    function toggleMute(btnEl) {
-      isMuted = !isMuted;
-      if (bgAudio) {
-        bgAudio.muted = isMuted;
-        if (!isMuted && bgAudio.paused) bgAudio.play().catch(function() {});
-      }
-      if (masterGain && ctx) {
-        masterGain.gain.setValueAtTime(isMuted ? 0 : 0.85, ctx.currentTime);
-      }
-      if (btnEl) {
-        btnEl.setAttribute('aria-label', isMuted ? 'Unmute intro' : 'Mute intro');
-        btnEl.innerHTML = isMuted
-          ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>'
-          : '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
-      }
-    }
+#aqw-cinematic-intro .sc-gold { background: linear-gradient(180deg, #1c1203 0%, #4a3008 32%, #8a5f14 58%, #c99b3f 80%, #e8c97f 100%); }
+#aqw-cinematic-intro .sc-gold .sun {
+  position: absolute; left: 50%; top: 30%; width: 26vmin; height: 26vmin; margin-left: -13vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6d8 0%, #ffd27a 55%, rgba(255,180,80,0) 74%);
+  filter: blur(1px); box-shadow: 0 0 100px 34px rgba(255,190,90,.5);
+}
+#aqw-cinematic-intro .sc-gold .sunrays {
+  position: absolute; left: 50%; top: 30%; width: 60vmin; height: 60vmin; margin-left: -30vmin; margin-top: -30vmin;
+  background: repeating-conic-gradient(from 0deg, rgba(255,220,140,.22) 0deg 5deg, transparent 5deg 14deg);
+  border-radius: 50%; animation: aqiRaysSpin 30s linear infinite; filter: blur(2px);
+}
+#aqw-cinematic-intro .sc-gold .dune { position: absolute; left: 0; width: 100%; height: 42%; }
+#aqw-cinematic-intro .sc-gold .dune.d1 { bottom: 0; opacity: .95; }
+#aqw-cinematic-intro .sc-gold .dune.d2 { bottom: -8%; height: 40%; opacity: .8; }
+#aqw-cinematic-intro .sc-gold .dune svg { width: 100%; height: 100%; }
 
-    function handoffToWebsite() {
-      if (window.aquawayMusic && typeof window.aquawayMusic.play === 'function') {
-        try {
-          if (bgAudio) {
-            bgAudio.pause();
-          }
-          if (!isMuted) {
-            window.aquawayMusic.play();
-          }
-        } catch (e) {}
-      }
-    }
+#aqw-cinematic-intro .sc-sunset { background: linear-gradient(180deg, #2b1140 0%, #6b2a4a 30%, #c96a2e 50%, #f0a24b 58%, #0d3b52 58.5%, #07202f 100%); }
+#aqw-cinematic-intro .sc-sunset .sunhalf {
+  position: absolute; left: 50%; top: 42%; width: 30vmin; height: 14vmin; margin-left: -15vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 100%, #ffe9b0 0%, #ffb45e 45%, rgba(255,160,70,0) 72%);
+  filter: blur(1px); box-shadow: 0 0 70px 24px rgba(255,170,80,.45);
+}
+#aqw-cinematic-intro .sc-sunset .reflect {
+  position: absolute; left: 50%; bottom: 0; width: 10vmin; height: 34%; margin-left: -5vmin;
+  background: linear-gradient(180deg, rgba(255,190,110,.55), rgba(255,170,90,.12) 70%, transparent);
+  filter: blur(6px);
+}
+#aqw-cinematic-intro .sc-sunset .wave { position: absolute; left: 0; bottom: 0; width: 100%; height: 24%; }
+#aqw-cinematic-intro .sc-sunset .wave.w2 { bottom: -8%; height: 30%; opacity: .8; }
+#aqw-cinematic-intro .sc-sunset .wave svg { width: 200%; height: 100%; animation: aqiWaveDrift 14s linear infinite; }
+#aqw-cinematic-intro .sc-sunset .wave.w2 svg { animation-duration: 20s; }
 
-    return {
-      init: initAudio,
-      sub: playSubRumble,
-      plane: playPlaneWhoosh,
-      ocean: playOceanSwell,
-      underwater: playUnderwaterFilter,
-      pyramids: playPyramidsImpact,
-      whip: playMemoryWhip,
-      silence: playSilenceDrop,
-      impact: playLogoImpact,
-      ensureRunning: ensureRunning,
-      toggleMute: toggleMute,
-      handoff: handoffToWebsite
-    };
-  })();
+#aqw-cinematic-intro .sc-night { background: radial-gradient(ellipse at 50% 28%, #101a3a 0%, #070b1c 55%, #02040c 100%); }
+#aqw-cinematic-intro .sc-night .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: 0; }
+#aqw-cinematic-intro .sc-night .star.s1 { top: 14%; left: 12%; } #aqw-cinematic-intro .sc-night .star.s2 { top: 22%; left: 78%; }
+#aqw-cinematic-intro .sc-night .star.s3 { top: 34%; left: 30%; } #aqw-cinematic-intro .sc-night .star.s4 { top: 12%; left: 55%; }
+#aqw-cinematic-intro .sc-night .star.s5 { top: 28%; left: 8%; } #aqw-cinematic-intro .sc-night .star.s6 { top: 18%; left: 90%; }
+#aqw-cinematic-intro .sc-night .star.s7 { top: 40%; left: 65%; } #aqw-cinematic-intro .sc-night .star.s8 { top: 8%; left: 38%; }
+#aqw-cinematic-intro .sc-night .star.s9 { top: 36%; left: 48%; } #aqw-cinematic-intro .sc-night .star.s10 { top: 24%; left: 20%; }
+#aqw-cinematic-intro.st-bg-night .star { animation: aqiTwinkle 2.6s ease infinite; }
+#aqw-cinematic-intro.st-bg-night .star.s2, #aqw-cinematic-intro.st-bg-night .star.s5, #aqw-cinematic-intro.st-bg-night .star.s9 { animation-delay: .8s; }
+#aqw-cinematic-intro.st-bg-night .star.s3, #aqw-cinematic-intro.st-bg-night .star.s7, #aqw-cinematic-intro.st-bg-night .star.s10 { animation-delay: 1.5s; }
+#aqw-cinematic-intro.st-bg-night .star.s4, #aqw-cinematic-intro.st-bg-night .star.s6, #aqw-cinematic-intro.st-bg-night .star.s8 { animation-delay: 2.1s; }
 
-  /* ─── 5. STORY ASSETS ─── */
-  var STORY_SHOTS = [
-    { id: 'escape',    src: BASE_URL + 'assets/images/airport1.webp', title: 'THE ESCAPE',         geo: 'DEPARTURE · GOLDEN HOUR' },
-    { id: 'flight',    src: BASE_URL + 'assets/images/airport2.webp', title: 'THE FLIGHT',         geo: '32,000 FT · OVER EGYPT' },
-    { id: 'redsea',    src: BASE_URL + 'assets/images/gallery-1.webp', title: 'THE RED SEA',       geo: '27.2579°N 33.8116°E · HURGHADA' },
-    { id: 'undersea',  src: BASE_URL + 'assets/images/dol1.webp',      title: 'UNDERWATER KINGDOM', geo: 'GIFTUN ISLANDS · RED SEA' },
-    { id: 'desert',    src: BASE_URL + 'assets/images/camel1.webp',    title: 'THE SAHARA',        geo: 'EASTERN DESERT · EGYPT' },
-    { id: 'pyramids',  src: BASE_URL + 'assets/images/pyramids.webp',  title: 'THE GREAT PYRAMIDS',geo: 'GIZA PLATEAU · CAIRO' },
-    { id: 'luxor',     src: BASE_URL + 'assets/images/luxor.webp',     title: 'ANCIENT LUXOR',     geo: 'KARNAK TEMPLE · NILE VALLEY' },
-    { id: 'finalhero', src: BASE_URL + 'assets/images/why.jpg',        title: 'THE DISCOVERY',     geo: 'AQUAWAY LUXURY TRAVEL' },
-    { id: 'logo',      src: BASE_URL + 'assets/images/logo.webp',      title: 'AQUAWAY TOURS',     geo: 'HURGHADA · RED SEA · EGYPT' }
-  ];
+#aqw-cinematic-intro .rays { z-index: 2; opacity: 0;
+  background: repeating-conic-gradient(from 0deg, rgba(212,175,55,.09) 0deg 4deg, transparent 4deg 15deg);
+  animation: aqiRaysSpin 40s linear infinite; filter: blur(1px);
+}
+#aqw-cinematic-intro.st-rays .rays { opacity: 1; transition: opacity 1s ease; }
 
-  var loadedImages = {};
-  STORY_SHOTS.forEach(function(s) {
-    var img = new Image();
-    img.src = s.src;
-    loadedImages[s.id] = img;
-  });
+#aqw-cinematic-intro .bubble { position: absolute; z-index: 4; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), rgba(180,240,255,.25) 55%, transparent 70%);
+  border: 1px solid rgba(255,255,255,.28);
+}
+#aqw-cinematic-intro .bubble.b1 { width: 9px; height: 9px; left: 12%; bottom: -8vh; }
+#aqw-cinematic-intro .bubble.b2 { width: 14px; height: 14px; left: 28%; bottom: -12vh; }
+#aqw-cinematic-intro .bubble.b3 { width: 6px; height: 6px; left: 44%; bottom: -6vh; }
+#aqw-cinematic-intro .bubble.b4 { width: 11px; height: 11px; left: 60%; bottom: -14vh; }
+#aqw-cinematic-intro .bubble.b5 { width: 7px; height: 7px; left: 74%; bottom: -9vh; }
+#aqw-cinematic-intro .bubble.b6 { width: 12px; height: 12px; left: 88%; bottom: -11vh; }
+#aqw-cinematic-intro .bubble.b7 { width: 5px; height: 5px; left: 6%; bottom: -16vh; }
+#aqw-cinematic-intro .bubble.b8 { width: 10px; height: 10px; left: 92%; bottom: -5vh; }
+#aqw-cinematic-intro.st-bubbles .bubble { animation: aqiBubbleRise linear infinite; opacity: 0; }
+#aqw-cinematic-intro.st-bubbles .bubble.b1 { animation-duration: 6.5s; animation-delay: .2s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b2 { animation-duration: 8s; animation-delay: 1.1s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b3 { animation-duration: 5.4s; animation-delay: .7s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b4 { animation-duration: 7.2s; animation-delay: 1.6s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b5 { animation-duration: 6s; animation-delay: .4s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b6 { animation-duration: 8.6s; animation-delay: 2s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b7 { animation-duration: 5.8s; animation-delay: 1.3s; }
+#aqw-cinematic-intro.st-bubbles .bubble.b8 { animation-duration: 7.6s; animation-delay: .9s; }
 
-  /* ─── 6. DOM SETUP WITH 2.39:1 CINEMATIC LETTERBOX ─── */
+#aqw-cinematic-intro .ember { position: absolute; z-index: 7; width: 4px; height: 4px; border-radius: 50%;
+  background: #ffd27a; box-shadow: 0 0 10px #ffb84d; opacity: 0; bottom: -8vh;
+}
+#aqw-cinematic-intro .ember.e1 { left: 8%; } #aqw-cinematic-intro .ember.e2 { left: 18%; } #aqw-cinematic-intro .ember.e3 { left: 30%; }
+#aqw-cinematic-intro .ember.e4 { left: 42%; } #aqw-cinematic-intro .ember.e5 { left: 55%; } #aqw-cinematic-intro .ember.e6 { left: 65%; }
+#aqw-cinematic-intro .ember.e7 { left: 75%; } #aqw-cinematic-intro .ember.e8 { left: 84%; } #aqw-cinematic-intro .ember.e9 { left: 92%; }
+#aqw-cinematic-intro .ember.e10 { left: 50%; }
+#aqw-cinematic-intro.st-ember .ember { animation: aqiEmberRise linear infinite; }
+#aqw-cinematic-intro.st-ember .ember.e1 { animation-duration: 3.2s; animation-delay: .1s; }
+#aqw-cinematic-intro.st-ember .ember.e2 { animation-duration: 4.1s; animation-delay: .9s; }
+#aqw-cinematic-intro.st-ember .ember.e3 { animation-duration: 3.6s; animation-delay: .4s; }
+#aqw-cinematic-intro.st-ember .ember.e4 { animation-duration: 4.6s; animation-delay: 1.4s; }
+#aqw-cinematic-intro.st-ember .ember.e5 { animation-duration: 3.4s; animation-delay: .7s; }
+#aqw-cinematic-intro.st-ember .ember.e6 { animation-duration: 4.3s; animation-delay: 1.8s; }
+#aqw-cinematic-intro.st-ember .ember.e7 { animation-duration: 3.8s; animation-delay: .2s; }
+#aqw-cinematic-intro.st-ember .ember.e8 { animation-duration: 4.8s; animation-delay: 1.1s; }
+#aqw-cinematic-intro.st-ember .ember.e9 { animation-duration: 3.5s; animation-delay: .6s; }
+#aqw-cinematic-intro.st-ember .ember.e10 { animation-duration: 4.5s; animation-delay: 1.6s; }
+
+#aqw-cinematic-intro .boat { position: absolute; z-index: 5; left: 10%; bottom: 23%; width: clamp(90px, 12vw, 170px); opacity: 0; }
+#aqw-cinematic-intro.st-boat .boat { opacity: 1; transition: opacity .8s ease; animation: aqiBoatBob 3.4s ease-in-out infinite; }
+
+#aqw-cinematic-intro .bird { position: absolute; z-index: 6; width: 44px; opacity: 0; }
+#aqw-cinematic-intro .bird.bd1 { top: 16%; left: -10vw; }
+#aqw-cinematic-intro .bird.bd2 { top: 22%; left: -14vw; width: 34px; }
+#aqw-cinematic-intro.st-birds .bird { opacity: .85; animation: aqiBirdFly 9s ease-in-out infinite; }
+#aqw-cinematic-intro.st-birds .bird.bd2 { animation-duration: 11s; animation-delay: 3.2s; }
+
+#aqw-cinematic-intro .ripple { z-index: 3; border: 2px solid rgba(0,224,255,.55); border-radius: 50%;
+  width: 24vmin; height: 24vmin; opacity: 0; left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(.2);
+}
+#aqw-cinematic-intro .ripple.r2 { width: 42vmin; height: 42vmin; border-color: rgba(255,255,255,.35); }
+#aqw-cinematic-intro.st-ripple .ripple.r1 { animation: aqiRippleOut 1.6s .15s ease-out both; }
+#aqw-cinematic-intro.st-ripple .ripple.r2 { animation: aqiRippleOut 1.6s .35s ease-out both; }
+
+#aqw-cinematic-intro .impact-ring { z-index: 30; border: 2px solid rgba(255,225,140,.9); border-radius: 50%;
+  width: 34vmin; height: 34vmin; opacity: 0;
+  transform: translate(-50%, -50%) scale(.2); left: 50%; top: 50%;
+  box-shadow: 0 0 30px rgba(255,200,90,.4), inset 0 0 30px rgba(255,200,90,.3);
+}
+#aqw-cinematic-intro.st-way .impact-ring { animation: aqiRingBoom .65s .62s cubic-bezier(.2,.8,.3,1) both; }
+#aqw-cinematic-intro.st-tours .impact-ring { animation: aqiRingBoom .6s .6s cubic-bezier(.2,.8,.3,1) both; }
+
+#aqw-cinematic-intro .stack {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(10px, 3.4vh, 30px); z-index: 20;
+}
+#aqw-cinematic-intro.st-bloom .stack { animation: aqiBloomOut .9s ease both; }
+
+#aqw-cinematic-intro .word {
+  position: relative;
+  display: flex; gap: .06em;
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 900;
+  font-size: clamp(46px, 9.5vw, 150px); letter-spacing: .1em; line-height: 1;
+  user-select: none; will-change: transform, opacity, filter;
+}
+#aqw-cinematic-intro .word span { display: inline-block; opacity: 0; will-change: transform, filter; }
+
+#aqw-cinematic-intro #w-aqua {
+  background: linear-gradient(100deg, var(--aqua-d) 0%, var(--aqua) 30%, #dcfbff 50%, var(--aqua) 70%, var(--aqua-d) 100%);
+  background-size: 230% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 46px rgba(0,224,255,.4);
+  overflow: hidden;
+}
+#aqw-cinematic-intro #w-aqua span { background: none; -webkit-background-clip: initial; background-clip: initial; color: inherit; text-shadow: none; }
+#aqw-cinematic-intro.st-aqua #w-aqua { animation: aqiTextShimmer 3.2s linear infinite; }
+#aqw-cinematic-intro.st-aqua #w-aqua span {
+  animation: aqiAssemble .95s cubic-bezier(.2,.8,.25,1) both;
+  animation-delay: calc(var(--i) * 150ms);
+}
+#aqw-cinematic-intro .aq-sweep { position: absolute; inset: -20%; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.5) 50%, transparent 65%);
+  transform: translateX(-150%) skewX(-8deg);
+}
+#aqw-cinematic-intro.st-aq-sweep .aq-sweep { animation: aqiAqSweep 1.6s .55s cubic-bezier(.4,0,.3,1) both; }
+
+#aqw-cinematic-intro .aqua-reflect {
+  position: absolute; left: 0; right: 0; top: 100%; height: 55%;
+  display: flex; gap: .06em; z-index: -1; pointer-events: none;
+  transform: scaleY(-1); opacity: .3;
+  background: linear-gradient(180deg, rgba(0,224,255,.32), transparent);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 88%);
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 88%);
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 900;
+  font-size: inherit; letter-spacing: .1em; overflow: hidden;
+}
+#aqw-cinematic-intro .aqua-reflect span { opacity: 0; }
+#aqw-cinematic-intro.st-aqua .aqua-reflect span {
+  animation: aqiAssemble .95s cubic-bezier(.2,.8,.25,1) both;
+  animation-delay: calc(var(--i) * 150ms + 130ms);
+}
+
+#aqw-cinematic-intro #w-way span {
+  background: linear-gradient(100deg, var(--gold-d) 0%, var(--gold) 30%, #fff3c4 50%, var(--gold) 70%, var(--gold-d) 100%);
+  background-size: 230% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 60px rgba(212,175,55,.45);
+  -webkit-text-stroke: 1px rgba(255,225,150,.35);
+  transform: translateY(150px) scale(1.3);
+}
+#aqw-cinematic-intro.st-way #w-way span {
+  animation: aqiSunRise .7s cubic-bezier(.15,.85,.3,1.1) both, aqiTextShimmer 2.8s linear infinite;
+  animation-delay: calc(var(--i) * 140ms), 0s;
+}
+#aqw-cinematic-intro.st-waypulse #w-way span { animation: aqiPulseGlow .55s ease both, aqiTextShimmer 2.8s linear infinite; }
+
+#aqw-cinematic-intro #w-tours span {
+  background: linear-gradient(100deg, #cfcfcf 0%, #fff 30%, var(--gold-b) 50%, #fff 70%, #cfcfcf 100%);
+  background-size: 230% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 70px rgba(255,220,140,.45);
+  transform: translateY(-160px) scale(1.15);
+}
+#aqw-cinematic-intro.st-tours #w-tours span {
+  animation: aqiDropSpin .78s cubic-bezier(.2,.8,.25,1) both, aqiTextShimmer 2.6s linear infinite;
+  animation-delay: calc(var(--i) * 120ms), 0s;
+}
+
+#aqw-cinematic-intro.st-stack-off #w-aqua span, #aqw-cinematic-intro.st-stack-off #w-way span,
+#aqw-cinematic-intro.st-stack-off #w-tours span, #aqw-cinematic-intro.st-stack-off .aqua-reflect span { animation: aqiFadeOutBlur .5s ease both; }
+
+#aqw-cinematic-intro .emblem {
+  position: absolute; left: 50%; top: 50%; z-index: 25;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(2.2vh, 4vh, 5vh); opacity: 0; pointer-events: none;
+}
+#aqw-cinematic-intro.st-emblem .emblem { animation: aqiEmblemPop .9s cubic-bezier(.2,.8,.25,1) both; }
+#aqw-cinematic-intro .ring-wrap { position: relative; width: 44vmin; height: 44vmin; }
+#aqw-cinematic-intro .badge-svg { position: absolute; inset: 0; width: 44vmin; height: 44vmin; opacity: 0; transform: rotate(-90deg); }
+#aqw-cinematic-intro .badge-svg circle {
+  fill: none; stroke: url(#aqiGoldGrad); stroke-width: 1.6; opacity: .95;
+  stroke-dasharray: 1131; stroke-dashoffset: 1131;
+  filter: drop-shadow(0 0 16px rgba(212,175,55,.65));
+}
+#aqw-cinematic-intro.st-circledraw .badge-svg { animation: aqiBadgeFade 1.5s ease both; }
+#aqw-cinematic-intro.st-circledraw .badge-svg circle { animation: aqiBadgeDraw 1.25s cubic-bezier(.6,0,.2,1) both; }
+#aqw-cinematic-intro .logo-badge {
+  position: absolute; inset: 0; margin: auto;
+  width: 26vmin; height: 26vmin; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; overflow: hidden; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, rgba(212,175,55,.22) 0%, transparent 68%);
+}
+#aqw-cinematic-intro .logo-badge img {
+  width: 84%; height: 84%; object-fit: cover; border-radius: 50%;
+  border: 2px solid rgba(212,175,55,.7);
+  filter: drop-shadow(0 0 26px rgba(212,175,55,.5));
+}
+#aqw-cinematic-intro .logo-badge .logo-shine { position: absolute; inset: -20%;
+  background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.5) 50%, transparent 58%);
+  transform: translateX(-140%) skewX(-10deg);
+}
+#aqw-cinematic-intro.st-logo .logo-badge { animation: aqiLogoPop 1.05s .25s cubic-bezier(.2,.8,.25,1) both; }
+#aqw-cinematic-intro.st-shine .logo-shine { animation: aqiShineSweep 1.4s .2s cubic-bezier(.4,0,.3,1) both; }
+
+#aqw-cinematic-intro .lockup { z-index: 40; text-align: center; opacity: 0; }
+#aqw-cinematic-intro.st-lockup .lockup { animation: aqiLockupPop 1.15s cubic-bezier(.2,.8,.25,1) both; }
+
+#aqw-cinematic-intro .lockup .presents {
+  font-size: clamp(10px, 1.4vw, 15px); letter-spacing: .72em; text-transform: uppercase;
+  color: rgba(184,184,184,.75); margin-bottom: 2.2vh;
+}
+#aqw-cinematic-intro .lockup .brand {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 900;
+  font-size: clamp(52px, 11vw, 170px); line-height: 1; letter-spacing: .18em;
+  background: linear-gradient(180deg, transparent 0%, transparent 49.8%, #ffe9a8 50%, #d4af37 78%, #8a6d1f 100%);
+  background-size: 230% 200%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 1.5px rgba(212,175,55,.85);
+  position: relative; overflow: hidden; padding-left: .18em;
+}
+#aqw-cinematic-intro.st-lockup .lockup .brand { animation: aqiGoldPour 1.9s cubic-bezier(.5,0,.3,1) both; }
+#aqw-cinematic-intro .lockup .brand-sub {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+  font-size: clamp(22px, 4vw, 52px); letter-spacing: .68em; color: #d9d9d9;
+  margin-top: 1.4vh; padding-left: .68em;
+}
+#aqw-cinematic-intro .lockup .rule { display: flex; align-items: center; justify-content: center; gap: 1.2em; margin: 3.4vh 0 2.4vh; }
+#aqw-cinematic-intro .lockup .rule .line { width: clamp(40px, 9vw, 130px); height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+#aqw-cinematic-intro .lockup .rule .line:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+#aqw-cinematic-intro .lockup .rule .dot { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 12px rgba(212,175,55,.9); }
+#aqw-cinematic-intro .lockup .tagline {
+  font-size: clamp(10px, 1.5vw, 15px); letter-spacing: .5em; text-transform: uppercase;
+  color: rgba(184,184,184,.85); padding-left: .5em;
+}
+
+#aqw-cinematic-intro .location {
+  position: absolute; left: 50%; bottom: 13vh; z-index: 57;
+  transform: translateX(-50%) translateY(20px);
+  display: flex; align-items: center; gap: 1em;
+  font-size: clamp(10px, 1.4vw, 14px); letter-spacing: .5em; text-transform: uppercase;
+  color: rgba(220,220,220,.9); opacity: 0;
+}
+#aqw-cinematic-intro .location .lline { width: clamp(28px, 6vw, 80px); height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+#aqw-cinematic-intro .location .lline:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+#aqw-cinematic-intro.st-location .location { animation: aqiLocUp .9s .3s cubic-bezier(.2,.8,.25,1) both; }
+
+#aqw-cinematic-intro .spark { position: absolute; width: 5px; height: 5px; background: #fff; border-radius: 50%; opacity: 0;
+  box-shadow: 0 0 8px 2px rgba(255,255,255,.8);
+}
+#aqw-cinematic-intro .spark.s1 { top: 6%; left: 12%; } #aqw-cinematic-intro .spark.s2 { top: 18%; right: 10%; }
+#aqw-cinematic-intro .spark.s3 { bottom: 14%; left: 20%; } #aqw-cinematic-intro .spark.s4 { bottom: 8%; right: 24%; }
+#aqw-cinematic-intro .spark.s5 { top: 4%; left: 52%; } #aqw-cinematic-intro .spark.s6 { top: 28%; left: 6%; }
+#aqw-cinematic-intro .spark.s7 { bottom: 22%; right: 8%; } #aqw-cinematic-intro .spark.s8 { top: 8%; right: 40%; }
+#aqw-cinematic-intro.st-lockup .spark { animation: aqiTwinkle 2.6s ease infinite; }
+#aqw-cinematic-intro.st-lockup .spark.s2, #aqw-cinematic-intro.st-lockup .spark.s5, #aqw-cinematic-intro.st-lockup .spark.s7 { animation-delay: .7s; }
+#aqw-cinematic-intro.st-lockup .spark.s3, #aqw-cinematic-intro.st-lockup .spark.s8 { animation-delay: 1.3s; }
+#aqw-cinematic-intro.st-lockup .spark.s4, #aqw-cinematic-intro.st-lockup .spark.s6 { animation-delay: 1.9s; }
+
+#aqw-cinematic-intro .idle-glow { position: absolute; inset: -30%; z-index: -1; background: radial-gradient(circle, rgba(212,175,55,.18) 0%, transparent 60%); }
+#aqw-cinematic-intro.st-lockup .lockup .idle-glow { animation: aqiIdlePulse 3.2s ease-in-out infinite; }
+
+#aqw-cinematic-intro .sound-btn, #aqw-cinematic-intro .skip-btn {
+  position: absolute; z-index: 70;
+  font-family: Inter, sans-serif; font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: #e8e8e8; background: rgba(20,20,20,.85); border: 1px solid rgba(255,255,255,.22);
+  padding: 11px 18px; border-radius: 3px; cursor: pointer; transition: all .25s ease;
+}
+#aqw-cinematic-intro .sound-btn { right: 14px; bottom: 26px; }
+#aqw-cinematic-intro .skip-btn { right: 14px; bottom: 76px; opacity: 0; pointer-events: none; }
+#aqw-cinematic-intro .sound-btn:hover, #aqw-cinematic-intro .skip-btn:hover { border-color: var(--gold); color: var(--gold-b); }
+#aqw-cinematic-intro.show-skip .skip-btn { opacity: .88; pointer-events: auto; }
+
+@keyframes aqiAssemble {
+  0% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.3); filter: blur(16px); }
+  60% { opacity: 1; filter: blur(2px); }
+  80% { transform: translate(0, 0) rotate(0) scale(1.05); filter: blur(0); }
+  100% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1); filter: blur(0); }
+}
+@keyframes aqiSunRise {
+  0% { opacity: 0; transform: translateY(150px) scale(1.3); filter: blur(16px); }
+  55% { opacity: 1; transform: translateY(-16px) scale(1); filter: blur(0); }
+  72% { transform: translateY(6px); }
+  86% { transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes aqiDropSpin {
+  0% { opacity: 0; transform: translateY(-160px) scale(1.15) rotateX(85deg); filter: blur(12px); }
+  50% { opacity: 1; transform: translateY(14px) scale(.98) rotateX(0); filter: blur(0); }
+  68% { transform: translateY(-7px); }
+  82% { transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0); filter: blur(0); }
+}
+@keyframes aqiFadeOutBlur {
+  from { opacity: 1; transform: scale(1) rotate(0) rotateX(0); filter: blur(0); }
+  to { opacity: 0; transform: scale(1) rotate(0) rotateX(0); filter: blur(22px); }
+}
+@keyframes aqiBloomOut {
+  0% { opacity: 1; filter: none; }
+  40% { opacity: 1; filter: brightness(5) blur(5px); }
+  100% { opacity: 0; filter: brightness(7) blur(30px); }
+}
+@keyframes aqiTextShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 230% center; }
+}
+@keyframes aqiGoldPour {
+  0% { background-position: 0% 100%; }
+  60% { background-position: 230% 0%; }
+  100% { background-position: 230% 0%; }
+}
+@keyframes aqiPulseGlow {
+  0% { transform: scale(1); filter: brightness(1); }
+  40% { transform: scale(1.06); filter: brightness(1.4); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+@keyframes aqiFlashQuick {
+  0% { opacity: 0; } 12% { opacity: .95; } 26% { opacity: .08; }
+  42% { opacity: .85; } 100% { opacity: 0; }
+}
+@keyframes aqiFlashMega {
+  0% { opacity: 0; } 8% { opacity: 1; } 20% { opacity: .18; }
+  30% { opacity: 1; } 46% { opacity: .08; } 100% { opacity: 0; }
+}
+@keyframes aqiClapFlash {
+  0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; }
+}
+@keyframes aqiStreakSweep {
+  0% { opacity: 0; transform: rotate(-22deg) translateX(-140%); }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(-22deg) translateX(270%); }
+}
+@keyframes aqiAnamSweep {
+  0% { transform: translateX(-55vw) scaleX(.5); opacity: 0; }
+  14% { opacity: 1; }
+  86% { opacity: 1; }
+  100% { transform: translateX(55vw) scaleX(1.3); opacity: 0; }
+}
+@keyframes aqiIrisCloseOpen {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  14% { opacity: 1; }
+  38% { transform: translate(-50%, -50%) scale(1); }
+  62% { transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+}
+@keyframes aqiCamShake {
+  0% { transform: translate(0,0) rotate(0); }
+  15% { transform: translate(-6px,3px) rotate(-.5deg); }
+  30% { transform: translate(5px,-4px) rotate(.4deg); }
+  45% { transform: translate(-4px,-2px) rotate(-.3deg); }
+  60% { transform: translate(3px,3px) rotate(.2deg); }
+  100% { transform: translate(0,0) rotate(0); }
+}
+@keyframes aqiCamShake3 {
+  0% { transform: translate(0,0) rotate(0); }
+  20% { transform: translate(-10px,5px) rotate(-.7deg); }
+  42% { transform: translate(8px,-7px) rotate(.6deg); }
+  64% { transform: translate(-6px,-4px) rotate(-.4deg); }
+  100% { transform: translate(0,0) rotate(0); }
+}
+@keyframes aqiRippleOut {
+  0% { opacity: .85; transform: translate(-50%,-50%) scale(.18); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1); }
+}
+@keyframes aqiRingBoom {
+  0% { opacity: 0; transform: translate(-50%,-50%) scale(.2); }
+  20% { opacity: .9; }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.4); }
+}
+@keyframes aqiBubbleRise {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  12% { opacity: .75; }
+  88% { opacity: .5; }
+  100% { transform: translateY(-210px) scale(1.15); opacity: 0; }
+}
+@keyframes aqiEmberRise {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  12% { opacity: .9; }
+  85% { opacity: .55; }
+  100% { transform: translate(var(--ex, 20px), -82vh) scale(.5); opacity: 0; }
+}
+@keyframes aqiBadgeDraw { to { stroke-dashoffset: 0; } }
+@keyframes aqiBadgeFade {
+  0% { opacity: 0; transform: rotate(-90deg) scale(.7); }
+  30% { opacity: .5; }
+  100% { opacity: 1; transform: rotate(90deg) scale(1); }
+}
+@keyframes aqiEmblemPop {
+  0% { opacity: 0; transform: translate(-50%,-50%) scale(.8); filter: blur(10px); }
+  60% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+}
+@keyframes aqiLogoPop {
+  0% { opacity: 0; transform: scale(.4); filter: blur(16px); }
+  60% { opacity: 1; filter: blur(0); }
+  78% { transform: scale(1.07); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes aqiLockupPop {
+  0% { opacity: 0; transform: scale(.6) translateY(34px); filter: blur(18px); }
+  55% { opacity: 1; filter: blur(0); }
+  75% { transform: scale(1.04) translateY(-5px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+@keyframes aqiShineSweep {
+  0% { transform: translateX(-140%) skewX(-10deg); opacity: 0; }
+  15% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateX(250%) skewX(-10deg); opacity: 0; }
+}
+@keyframes aqiAqSweep {
+  0% { transform: translateX(-150%) skewX(-8deg); opacity: 0; }
+  15% { opacity: .9; }
+  80% { opacity: .9; }
+  100% { transform: translateX(250%) skewX(-8deg); opacity: 0; }
+}
+@keyframes aqiFwBurst {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  65% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--fx), var(--fy)) scale(.25); }
+}
+@keyframes aqiFwCore {
+  0% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(3.2); }
+}
+@keyframes aqiTwinkle {
+  0%, 100% { opacity: 0; transform: scale(.4); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+@keyframes aqiIdlePulse {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes aqiRaysSpin { to { transform: rotate(360deg); } }
+@keyframes aqiCausticDrift {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 500px 250px, 430px -190px, 580px 300px, 470px -230px; }
+}
+@keyframes aqiWaveDrift { to { transform: translateX(-50%); } }
+@keyframes aqiBoatBob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2.5deg); }
+}
+@keyframes aqiBirdFly {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(32vw, -2.5vh); }
+  50% { transform: translate(64vw, 0); }
+  75% { transform: translate(96vw, -2vh); }
+  100% { transform: translate(128vw, 0); }
+}
+@keyframes aqiCamDrift {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+@keyframes aqiPlxIn {
+  0% { transform: scale(1.08) translateX(-1.2%); }
+  100% { transform: scale(1) translateX(0); }
+}
+@keyframes aqiGrainJit {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-2%,1%); }
+  50% { transform: translate(1%,-2%); }
+  75% { transform: translate(-1%,2%); }
+  100% { transform: translate(2%,-1%); }
+}
+@keyframes aqiGrainFadeIn { to { opacity: .5; } }
+@keyframes aqiBarIn { to { transform: scaleY(1); } }
+@keyframes aqiCbIn {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(-8deg) scale(1.18); }
+  100% { opacity: 1; transform: translate(-50%, -50%) rotate(-2deg) scale(1); }
+}
+@keyframes aqiCbOut {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(-2deg) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -140%) rotate(-10deg) scale(.85); }
+}
+@keyframes aqiCapShow {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px); letter-spacing: .8em; }
+  14% { opacity: .85; transform: translateX(-50%) translateY(0); letter-spacing: .5em; }
+  80% { opacity: .85; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
+@keyframes aqiLocUp {
+  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes aqiRecBlink { 0% { opacity: 1; } 50% { opacity: .15; } 100% { opacity: 1; } }
+`;
+
+  /* ─── 4. OVERLAY & STAGE DOM ─── */
   var overlay = document.createElement('div');
   overlay.id = 'aqw-cinematic-intro';
-  overlay.setAttribute('style',
-    'position:fixed;inset:0;z-index:999999;' +
-    'background:#000000;pointer-events:all;' +
-    'will-change:opacity,transform;overflow:hidden;user-select:none;'
-  );
+  overlay.setAttribute('aria-hidden', 'true');
 
-  var canvas = document.createElement('canvas');
-  canvas.setAttribute('style', 'position:absolute;inset:0;width:100%;height:100%;display:block;');
-  var ctx = canvas.getContext('2d', { alpha: false });
+  overlay.innerHTML = `
+    <div class="stage" id="aqwStage">
+      <div class="layer sc sc-deep">
+        <div class="godrays"></div>
+        <div class="caustics"></div>
+        <div class="wave">
+          <svg viewBox="0 0 2000 120" preserveAspectRatio="none">
+            <path d="M0 80 Q 125 40 250 80 T 500 80 T 750 80 T 1000 80 T 1250 80 T 1500 80 T 1750 80 T 2000 80 L 2000 120 L 0 120 Z" fill="#0b3a55"/>
+          </svg>
+        </div>
+        <div class="wave w2">
+          <svg viewBox="0 0 2000 120" preserveAspectRatio="none">
+            <path d="M0 60 Q 125 95 250 60 T 500 60 T 750 60 T 1000 60 T 1250 60 T 1500 60 T 1750 60 T 2000 60 L 2000 120 L 0 120 Z" fill="#072a40"/>
+          </svg>
+        </div>
+      </div>
 
-  // Top Cinema Letterbox Bar
-  var barTop = document.createElement('div');
-  barTop.className = 'aqw-cinema-bar-top';
-  barTop.setAttribute('style',
-    'position:absolute;top:0;left:0;right:0;height:7.5vh;background:#000000;z-index:5;' +
-    'display:flex;align-items:center;justify-content:space-between;padding:0 2rem;' +
-    'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;' +
-    'font-size:0.68rem;letter-spacing:0.25em;color:rgba(212,175,55,0.6);text-transform:uppercase;' +
-    'transition:height 0.35s cubic-bezier(0.2,0,0,1);'
-  );
-  barTop.innerHTML = '<span>AQUAWAY FILMS // HOLLYWOOD IDENT</span><span id="aqw-timecode">00:00:00:00</span>';
+      <div class="layer sc sc-gold">
+        <div class="sunrays"></div>
+        <div class="sun"></div>
+        <div class="dune d2">
+          <svg viewBox="0 0 2000 400" preserveAspectRatio="none">
+            <path d="M0 400 Q 300 300 600 370 T 1200 350 T 2000 380 L 2000 400 L 0 400 Z" fill="#8a5f14"/>
+          </svg>
+        </div>
+        <div class="dune d1">
+          <svg viewBox="0 0 2000 400" preserveAspectRatio="none">
+            <path d="M0 400 Q 250 260 550 340 T 1100 320 T 2000 360 L 2000 400 L 0 400 Z" fill="#c99b3f"/>
+          </svg>
+        </div>
+      </div>
 
-  // Bottom Cinema Letterbox Bar
-  var barBottom = document.createElement('div');
-  barBottom.className = 'aqw-cinema-bar-bottom';
-  barBottom.setAttribute('style',
-    'position:absolute;bottom:0;left:0;right:0;height:7.5vh;background:#000000;z-index:5;' +
-    'display:flex;align-items:center;justify-content:space-between;padding:0 2rem;' +
-    'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;' +
-    'font-size:0.68rem;letter-spacing:0.22em;color:rgba(255,255,255,0.5);text-transform:uppercase;' +
-    'transition:height 0.35s cubic-bezier(0.2,0,0,1);'
-  );
-  barBottom.innerHTML = '<span id="aqw-geo-tag">THE JOURNEY TO EGYPT</span><span>2.39:1 ANAMORPHIC</span>';
+      <div class="layer sc sc-sunset">
+        <div class="sunhalf"></div>
+        <div class="reflect"></div>
+        <div class="wave">
+          <svg viewBox="0 0 2000 120" preserveAspectRatio="none">
+            <path d="M0 70 Q 125 35 250 70 T 500 70 T 750 70 T 1000 70 T 1250 70 T 1500 70 T 1750 70 T 2000 70 L 2000 120 L 0 120 Z" fill="#0e4258"/>
+          </svg>
+        </div>
+        <div class="wave w2">
+          <svg viewBox="0 0 2000 120" preserveAspectRatio="none">
+            <path d="M0 50 Q 125 80 250 50 T 500 50 T 750 50 T 1000 50 T 1250 50 T 1500 50 T 1750 50 T 2000 50 L 2000 120 L 0 120 Z" fill="#082c3e"/>
+          </svg>
+        </div>
+      </div>
 
-  // Sound Button (Glass/Gold)
-  var soundBtn = document.createElement('button');
-  soundBtn.id = 'aqw-intro-sound';
-  soundBtn.setAttribute('aria-label', 'Toggle intro sound');
-  soundBtn.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
-  soundBtn.setAttribute('style',
-    'position:absolute;top:9.5vh;left:1.8rem;' +
-    'background:rgba(8,12,24,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);' +
-    'border:1px solid rgba(212,175,55,0.4);color:rgba(212,175,55,0.9);' +
-    'width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;' +
-    'align-items:center;justify-content:center;transition:all 0.25s ease;z-index:10;' +
-    'box-shadow:0 4px 24px rgba(0,0,0,0.5);'
-  );
-  soundBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    AudioEngine.init();
-    AudioEngine.toggleMute(soundBtn);
-  });
+      <div class="layer sc sc-night">
+        <div class="star s1"></div><div class="star s2"></div><div class="star s3"></div>
+        <div class="star s4"></div><div class="star s5"></div><div class="star s6"></div>
+        <div class="star s7"></div><div class="star s8"></div><div class="star s9"></div>
+        <div class="star s10"></div>
+      </div>
 
-  // Skip Button (Glass/Gold)
-  var skipBtn = document.createElement('button');
-  skipBtn.id = 'aqw-intro-skip';
-  skipBtn.setAttribute('aria-label', 'Skip cinematic intro');
-  skipBtn.textContent = 'SKIP';
-  skipBtn.setAttribute('style',
-    'position:absolute;bottom:9.5vh;right:1.8rem;' +
-    'background:rgba(8,12,24,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);' +
-    'border:1px solid rgba(212,175,55,0.35);color:rgba(212,175,55,0.85);' +
-    'font-size:0.68rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;' +
-    'padding:0.5rem 1.25rem;border-radius:50px;cursor:pointer;font-family:inherit;' +
-    'transition:all 0.3s ease;opacity:0;z-index:10;' +
-    'box-shadow:0 4px 24px rgba(0,0,0,0.5);'
-  );
+      <div class="layer rays"></div>
 
-  overlay.appendChild(canvas);
-  overlay.appendChild(barTop);
-  overlay.appendChild(barBottom);
-  overlay.appendChild(soundBtn);
-  overlay.appendChild(skipBtn);
+      <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+      <div class="bubble b4"></div><div class="bubble b5"></div><div class="bubble b6"></div>
+      <div class="bubble b7"></div><div class="bubble b8"></div>
 
-  /* ─── 7. THEATRICAL VOLUMETRIC SEARCHLIGHTS ─── */
-  function createSearchlights(W, H) {
-    return [
-      { x: W * -0.06, y: H * 1.12, startAngle: -84,  endAngle: -58,  color: 'rgba(255,248,225,', width: 30 },
-      { x: W *  1.06, y: H * 1.12, startAngle: -104, endAngle: -122, color: 'rgba(255,248,225,', width: 28 },
-      { x: W *  0.10, y: H * 0.98, startAngle: -74,  endAngle: -55,  color: 'rgba(212,175,55,',  width: 22 },
-      { x: W *  0.90, y: H * 0.98, startAngle: -116, endAngle: -100, color: 'rgba(212,175,55,',  width: 22 },
-      { x: W *  0.30, y: H * 1.08, startAngle: -90,  endAngle: -82,  color: 'rgba(0,184,200,',   width: 16 },
-      { x: W *  0.70, y: H * 1.08, startAngle: -92,  endAngle: -98,  color: 'rgba(0,184,200,',   width: 16 },
-      { x: W *  0.50, y: H * 1.15, startAngle: -90,  endAngle: -90,  color: 'rgba(255,215,0,',   width: 34 }
-    ];
+      <div class="ember e1" style="--ex:26px"></div><div class="ember e2" style="--ex:-30px"></div>
+      <div class="ember e3" style="--ex:18px"></div><div class="ember e4" style="--ex:-22px"></div>
+      <div class="ember e5" style="--ex:34px"></div><div class="ember e6" style="--ex:-26px"></div>
+      <div class="ember e7" style="--ex:16px"></div><div class="ember e8" style="--ex:-34px"></div>
+      <div class="ember e9" style="--ex:22px"></div><div class="ember e10" style="--ex:-14px"></div>
+
+      <svg class="boat" viewBox="0 0 120 80">
+        <path d="M8 55 Q60 78 112 55 L96 60 Q60 68 24 60 Z" fill="#241708"/>
+        <path d="M58 8 L58 55 L80 55 Q80 22 58 8 Z" fill="#e8ddc8"/>
+        <path d="M52 14 L52 55 L32 55 Q32 30 52 14 Z" fill="#cfc2a8"/>
+        <line x1="55" y1="6" x2="55" y2="58" stroke="#5a4632" stroke-width="2.5"/>
+      </svg>
+
+      <svg class="bird bd1" viewBox="0 0 40 16">
+        <path d="M2 12 Q10 4 20 12 Q30 4 38 12" fill="none" stroke="#1a0f22" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="bird bd2" viewBox="0 0 40 16">
+        <path d="M2 12 Q10 4 20 12 Q30 4 38 12" fill="none" stroke="#1a0f22" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
+      <div class="layer ripple r1"></div>
+      <div class="layer ripple r2"></div>
+      <div class="layer impact-ring"></div>
+
+      <div class="emblem">
+        <div class="ring-wrap">
+          <svg class="badge-svg" viewBox="0 0 400 400">
+            <defs>
+              <linearGradient id="aqiGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#8a6d1f"/>
+                <stop offset="30%" stop-color="#d4af37"/>
+                <stop offset="55%" stop-color="#ffe9a8"/>
+                <stop offset="75%" stop-color="#d4af37"/>
+                <stop offset="100%" stop-color="#8a6d1f"/>
+              </linearGradient>
+            </defs>
+            <circle cx="200" cy="200" r="180"/>
+          </svg>
+          <div class="logo-badge">
+            <img src="${LOGO_URL}" alt="AQUAWAY TOURS logo" draggable="false">
+            <div class="logo-shine"></div>
+          </div>
+        </div>
+        <div class="lockup">
+          <div class="idle-glow"></div>
+          <div class="presents">AQUAWAY TOURS PRESENTS</div>
+          <div class="brand">AQUAWAY</div>
+          <div class="brand-sub">TOURS</div>
+          <div class="rule"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+          <div class="tagline">HURGHADA &middot; RED SEA &middot; EGYPT</div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="word" id="w-aqua">
+          <span style="--i:0; --dx:-46px; --dy:52px; --rot:-22deg">A</span>
+          <span style="--i:1; --dx:60px; --dy:-30px; --rot:18deg">Q</span>
+          <span style="--i:2; --dx:-34px; --dy:-58px; --rot:14deg">U</span>
+          <span style="--i:3; --dx:44px; --dy:44px; --rot:-16deg">A</span>
+          <div class="aq-sweep"></div>
+          <div class="aqua-reflect" aria-hidden="true">
+            <span style="--i:0; --dx:-46px; --dy:52px; --rot:-22deg">A</span>
+            <span style="--i:1; --dx:60px; --dy:-30px; --rot:18deg">Q</span>
+            <span style="--i:2; --dx:-34px; --dy:-58px; --rot:14deg">U</span>
+            <span style="--i:3; --dx:44px; --dy:44px; --rot:-16deg">A</span>
+          </div>
+        </div>
+        <div class="word" id="w-way">
+          <span style="--i:0">W</span><span style="--i:1">A</span><span style="--i:2">Y</span>
+        </div>
+        <div class="word" id="w-tours">
+          <span style="--i:0">T</span><span style="--i:1">O</span><span style="--i:2">U</span><span style="--i:3">R</span><span style="--i:4">S</span>
+        </div>
+      </div>
+
+      <div class="layer clap"></div>
+      <div class="layer flash"></div>
+      <div class="layer streak"></div>
+      <div class="layer streak s2"></div>
+      <div class="layer anamorph"></div>
+      <div class="layer iris"></div>
+
+      <div class="clapboard">
+        <div class="cb-top">
+          <div class="cb-title">AQUAWAY TOURS</div>
+          <div class="cb-pres">Presents</div>
+        </div>
+        <div class="cb-stripes"></div>
+        <div class="cb-bottom">Scene 1 &middot; Take 1 &middot; Red Sea</div>
+      </div>
+
+      <div class="actcap cap1">Act I &middot; The Deep</div>
+      <div class="actcap cap2">Act II &middot; The Desert</div>
+      <div class="actcap cap3">Act III &middot; The Sunset</div>
+
+      <div class="spark s1"></div><div class="spark s2"></div><div class="spark s3"></div>
+      <div class="spark s4"></div><div class="spark s5"></div><div class="spark s6"></div>
+      <div class="spark s7"></div><div class="spark s8"></div>
+
+      <div class="bar bar-top"></div>
+      <div class="bar bar-bottom"></div>
+      <div class="layer vignette"></div>
+      <div class="layer grain"></div>
+    </div>
+
+    <div class="tc" id="aqwTc"><span class="rec"></span><span id="aqwTcText">00:00:00:00</span></div>
+    <div class="location"><span class="lline"></span>Red Sea &middot; Egypt<span class="lline"></span></div>
+
+    <button class="sound-btn" id="aqwSoundBtn" aria-label="Toggle intro sound">Sound: ON</button>
+    <button class="skip-btn" id="aqwSkipBtn" aria-label="Skip cinematic intro">Skip Intro</button>
+  `;
+
+  var stage = overlay.querySelector('.stage');
+  var tcText = overlay.querySelector('#aqwTcText');
+  var soundBtn = overlay.querySelector('#aqwSoundBtn');
+  var skipBtn = overlay.querySelector('#aqwSkipBtn');
+
+  /* ─── 5. AUDIO ENGINE (WEB AUDIO + MUSIC STING) ─── */
+  var AC = null, soundOn = true, musicBuf = null, stingPlayed = false;
+  var timer = null, tcTimer = null;
+  var timeouts = [];
+  var done = false, isSkipping = false;
+
+  function ctx() {
+    if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+    if (AC && AC.state === 'suspended') AC.resume();
+    return AC;
   }
 
-  /* ─── 8. STARDUST TRANSFORMATION PARTICLES (2.65s - 2.95s) ─── */
-  var isMobile = window.innerWidth < 768;
-  var MAX_PARTICLES = isMobile ? 80 : 180;
+  fetch(MUSIC_URL).then(function (r) { return r.arrayBuffer(); })
+    .then(function (b) { return ctx().decodeAudioData(b); })
+    .then(function (buf) { musicBuf = buf; })
+    .catch(function () {});
 
-  function makeParticle(W, H) {
-    var angle = Math.random() * Math.PI * 2;
-    var dist = Math.random() * Math.min(W, H) * 0.45;
-    return {
-      x: W * 0.5 + Math.cos(angle) * dist,
-      y: H * 0.5 + Math.sin(angle) * dist,
-      vx: (Math.random() - 0.5) * 1.2,
-      vy: (Math.random() - 0.5) * 1.2,
-      targetX: W * 0.5 + (Math.random() - 0.5) * 160,
-      targetY: H * 0.5 + (Math.random() - 0.5) * 160,
-      r: Math.random() * 2.2 + 0.6,
-      life: Math.random(),
-      isAqua: Math.random() > 0.7
-    };
+  function musicSting(t, vol) {
+    if (!AC || !soundOn || !musicBuf) return;
+    var s = AC.createBufferSource(), g = AC.createGain();
+    s.buffer = musicBuf;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || .32, t + .06);
+    g.gain.setValueAtTime(vol || .32, t + 1.55);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.0);
+    s.connect(g).connect(AC.destination);
+    s.start(t, 0, 2.0);
+    stingPlayed = true;
   }
 
-  /* ─── 9. ENGINE CONTROLLER ─── */
-  var W = 0, H = 0, dpr = 1;
-  var startTime = null;
-  var phase = 0;
-  var beams = [];
-  var particles = [];
-  var done = false;
-  var isSkipping = false;
-  var skipStartTime = 0;
-  var timecodeEl = null;
-  var geoEl = null;
-  var duration = isReturning ? RETURN_DURATION : TOTAL_DURATION;
-  if (prefersReducedMotion) duration = 800;
+  function noise(t, dur, vol, f0, f1, type) {
+    if (!AC || !soundOn) return;
+    var n = AC.createBufferSource(), g = AC.createGain(), f = AC.createBiquadFilter();
+    var buf = AC.createBuffer(1, AC.sampleRate * dur, AC.sampleRate);
+    var d = buf.getChannelData(0);
+    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    n.buffer = buf; n.loop = true;
+    f.type = type || 'bandpass'; f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * 0.18); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    n.connect(f).connect(g).connect(AC.destination);
+    n.start(t); n.stop(t + dur + .05);
+  }
 
-  function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2.0);
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width  = Math.floor(W * dpr);
-    canvas.height = Math.floor(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  function boom(t, vol, f0) {
+    if (!AC || !soundOn) return;
+    var o = AC.createOscillator(), g = AC.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(f0 || 95, t); o.frequency.exponentialRampToValueAtTime(f0 ? f0 * .38 : 36, t + .55);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol || .7, t + .02); g.gain.exponentialRampToValueAtTime(0.0001, t + .6);
+    o.connect(g).connect(AC.destination); o.start(t); o.stop(t + .7);
+  }
 
-    beams = createSearchlights(W, H);
-    particles = [];
-    for (var i = 0; i < MAX_PARTICLES; i++) {
-      particles.push(makeParticle(W, H));
+  function subBoom(t, vol) {
+    if (!AC || !soundOn) return;
+    var o = AC.createOscillator(), g = AC.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(54, t); o.frequency.exponentialRampToValueAtTime(25, t + .95);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol || .85, t + .03); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.05);
+    o.connect(g).connect(AC.destination); o.start(t); o.stop(t + 1.1);
+  }
+
+  function zap(t) {
+    if (!AC || !soundOn) return;
+    var n = AC.createBufferSource(), g = AC.createGain(), f = AC.createBiquadFilter();
+    var buf = AC.createBuffer(1, AC.sampleRate * .22, AC.sampleRate);
+    var d = buf.getChannelData(0);
+    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    n.buffer = buf; f.type = 'highpass'; f.frequency.value = 2600;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.5, t + .01); g.gain.exponentialRampToValueAtTime(0.0001, t + .2);
+    n.connect(f).connect(g).connect(AC.destination); n.start(t); n.stop(t + .3);
+  }
+
+  function clap(t) {
+    if (!AC || !soundOn) return;
+    noise(t, .14, .55, 1800, 300, 'bandpass');
+    boom(t + .02, .5, 120);
+  }
+
+  function pop(t, fr) {
+    noise(t, .05, .16, fr || 1800, fr || 1800, 'highpass');
+  }
+
+  function crackle(t) {
+    if (!AC || !soundOn) return;
+    for (var i = 0; i < 10; i++) pop(t + i * .05 + Math.random() * .03, 2600 + Math.random() * 2200);
+  }
+
+  function shimmer(t) {
+    if (!AC || !soundOn) return;
+    [880, 1320, 1760].forEach(function (fr, i) {
+      var o = AC.createOscillator(), g = AC.createGain();
+      o.type = 'sine'; o.frequency.value = fr;
+      g.gain.setValueAtTime(0, t + i * .05); g.gain.linearRampToValueAtTime(.06, t + i * .05 + .06); g.gain.exponentialRampToValueAtTime(0.0001, t + i * .05 + 1.4);
+      o.connect(g).connect(AC.destination); o.start(t + i * .05); o.stop(t + i * .05 + 1.5);
+    });
+  }
+
+  function water(t) {
+    noise(t, 1.3, .2, 900, 160, 'lowpass');
+  }
+
+  function irisWhoosh(t) {
+    noise(t, .7, .14, 2400, 150, 'bandpass');
+  }
+
+  function whoosh(t, dur, vol) {
+    noise(t, dur || .9, vol || .16, 350, 2600, 'bandpass');
+  }
+
+  function burst(x, y, n, colors, size) {
+    var fw = document.createElement('div');
+    fw.style.cssText = 'position:absolute;z-index:43;left:' + x + '%;top:' + y + '%;pointer-events:none;';
+    for (var i = 0; i < n; i++) {
+      var p = document.createElement('span');
+      var a = (i / n) * Math.PI * 2 + Math.random() * .3;
+      var dist = size + Math.random() * size * .8;
+      var c = colors[i % colors.length];
+      p.style.cssText = 'position:absolute;width:5px;height:5px;border-radius:50%;background:' + c +
+        ';box-shadow:0 0 8px ' + c + ';opacity:0;animation:aqiFwBurst .95s cubic-bezier(.1,.7,.3,1) forwards;animation-delay:' + (Math.random() * .12).toFixed(2) + 's;';
+      p.style.setProperty('--fx', (Math.cos(a) * dist).toFixed(1) + 'px');
+      p.style.setProperty('--fy', (Math.sin(a) * dist).toFixed(1) + 'px');
+      fw.appendChild(p);
     }
+    var core = document.createElement('div');
+    core.style.cssText = 'position:absolute;left:50%;top:50%;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff,rgba(255,255,255,0) 70%);opacity:0;animation:aqiFwCore .5s ease forwards;';
+    fw.appendChild(core);
+    stage.appendChild(fw);
+    setTimeout(function () { if (fw.parentNode) fw.parentNode.removeChild(fw); }, 1700);
+  }
+
+  function addTimeout(fn, ms) {
+    timeouts.push(setTimeout(fn, ms));
+  }
+
+  /* ─── 6. TIMELINE ─── */
+  var STATES = {
+    boot:        { t: 0 },
+    tc:          { t: 0 },
+    bgDeep:      { t: 250 },
+    kicker:      { t: 500 },
+    clap:        { t: 680 },
+    kickerOff:   { t: 1300 },
+    bubbles:     { t: 1150 },
+    ripple:      { t: 1150 },
+    aqua:        { t: 1150 },
+    aqSweep:     { t: 1300 },
+    cap1:        { t: 1400 },
+    quickflash:  { t: 2650 },
+    shake:       { t: 2650 },
+    anam1:       { t: 2650 },
+    iris1:       { t: 3050 },
+    aquaOff:     { t: 3150 },
+    bubblesOff:  { t: 3200, off: true },
+    bgGold:      { t: 3350 },
+    ember:       { t: 3400 },
+    cap2:        { t: 3450 },
+    way:         { t: 3550 },
+    waypulse:    { t: 4900 },
+    iris2:       { t: 5300 },
+    wayOff:      { t: 5400 },
+    emberOff:    { t: 5450, off: true },
+    bgSunset:    { t: 5550 },
+    boat:        { t: 5550 },
+    birds:       { t: 5600 },
+    cap3:        { t: 5650 },
+    tours:       { t: 5750 },
+    bloom:       { t: 7250 },
+    stackOff:    { t: 7550 },
+    megaflash:   { t: 7250 },
+    anam2:       { t: 7250 },
+    shake3:      { t: 7250 },
+    boatOff:     { t: 7650, off: true },
+    birdsOff:    { t: 7650, off: true },
+    bgNight:     { t: 7700 },
+    rays:        { t: 7700 },
+    circledraw:  { t: 7850 },
+    emblem:      { t: 8050 },
+    logo:        { t: 8050 },
+    shine:       { t: 8250 },
+    lockup:      { t: 8350 },
+    location:    { t: 8550 }
+  };
+
+  function runIntro() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (tcTimer) { clearInterval(tcTimer); tcTimer = null; }
+    stage.classList.remove('st-boot', 'st-tc', 'st-bg-deep', 'st-kicker', 'st-clap', 'st-kicker-off',
+      'st-bubbles', 'st-ripple', 'st-aqua', 'st-aq-sweep', 'st-cap1', 'st-quickflash', 'st-shake',
+      'st-anam1', 'st-iris1', 'st-aqua-off', 'st-bg-gold', 'st-ember', 'st-cap2', 'st-way', 'st-waypulse',
+      'st-iris2', 'st-way-off', 'st-bg-sunset', 'st-boat', 'st-birds', 'st-cap3', 'st-tours',
+      'st-bloom', 'st-stack-off', 'st-megaflash', 'st-anam2', 'st-shake3', 'st-bg-night',
+      'st-rays', 'st-circledraw', 'st-emblem', 'st-logo', 'st-shine', 'st-lockup', 'st-location');
+    void stage.offsetWidth;
+
+    Object.keys(STATES).forEach(function (k) {
+      var s = STATES[k];
+      addTimeout(function () {
+        if (s.off) stage.classList.remove('st-' + k);
+        else stage.classList.add('st-' + k);
+      }, s.t);
+    });
+
+    var t0 = performance.now();
+    tcTimer = setInterval(function () {
+      var el = (performance.now() - t0) / 1000;
+      var sec = Math.min(Math.floor(el), 9);
+      var fr = Math.floor((el - Math.floor(el)) * 24);
+      tcText.textContent = '00:00:0' + sec + ':' + (fr < 10 ? '0' : '') + fr;
+    }, 40);
+
+    var now = ctx() ? AC.currentTime : 0;
+    var t = now + .03;
+    clap(t + .68);
+    musicSting(t + .75);
+    water(t + 1.15);
+    pop(t + 1.5, 900); pop(t + 1.85, 1200); pop(t + 2.2, 700);
+    zap(t + 2.65);
+    whoosh(t + 2.65, .6, .14);
+    irisWhoosh(t + 3.05);
+    subBoom(t + 3.55);
+    whoosh(t + 3.55, .8, .16);
+    crackle(t + 3.92);
+    boom(t + 4.9, .4, 80);
+    irisWhoosh(t + 5.3);
+    subBoom(t + 5.75);
+    whoosh(t + 5.75, .7, .15);
+    crackle(t + 6.12);
+    zap(t + 7.25);
+    subBoom(t + 7.27, .95);
+    musicSting(t + 7.55, .26);
+    shimmer(t + 8.35);
+    whoosh(t + 8.4, 1.1, .1);
+    burst(24, 22, 18, ['#ffd27a', '#fff3c4', '#fff'], 80);
+    addTimeout(function () { boom(ctx().currentTime + .02, .45, 160); crackle(ctx().currentTime + .06); }, 8650);
+    addTimeout(function () { burst(72, 18, 16, ['#fff', '#aee6ff', '#ffe9a8'], 70); }, 9050);
+    addTimeout(function () { boom(ctx().currentTime + .02, .4, 170); crackle(ctx().currentTime + .06); }, 9050);
+    addTimeout(function () { burst(48, 30, 20, ['#ffd27a', '#ff8a5c', '#fff'], 90); }, 9450);
+    addTimeout(function () { boom(ctx().currentTime + .02, .5, 150); crackle(ctx().currentTime + .06); }, 9450);
+  }
+
+  /* ─── 7. COMPLETE / SKIP / SOUND ─── */
+  function completeIntro() {
+    if (done) return;
+    done = true;
+    if (timer) clearTimeout(timer);
+    if (tcTimer) clearInterval(tcTimer);
+
+    try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+
+    document.body.style.overflow = '';
+
+    if (soundOn && window.aquawayMusic) {
+      try {
+        if (window.aquawayMusic.audio) window.aquawayMusic.audio.muted = false;
+        if (typeof window.aquawayMusic.play === 'function') window.aquawayMusic.play();
+      } catch (e) {}
+    }
+
+    overlay.style.transition = 'opacity .5s cubic-bezier(.2,0,0,1)';
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    setTimeout(function () {
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }, 520);
   }
 
   function handleSkip() {
     if (isSkipping || done) return;
     isSkipping = true;
-    skipStartTime = performance.now();
-    AudioEngine.impact();
-  }
-
-  function completeIntro() {
-    if (done) return;
-    done = true;
-    cancelAnimationFrame(window._aqwIntroRaf);
-
-    try {
-      sessionStorage.setItem(STORAGE_KEY, '1');
-    } catch (e) {}
-
-    document.body.style.overflow = '';
-    barTop.style.height = '0';
-    barBottom.style.height = '0';
-    overlay.style.transition = 'opacity 0.35s cubic-bezier(0.2,0,0,1)';
+    if (timer) clearTimeout(timer);
+    if (tcTimer) clearInterval(tcTimer);
+    for (var i = 0; i < timeouts.length; i++) clearTimeout(timeouts[i]);
+    overlay.style.transition = 'opacity .28s ease';
     overlay.style.opacity = '0';
     overlay.style.pointerEvents = 'none';
-
-    AudioEngine.handoff();
-
-    setTimeout(function() {
-      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-      var loader = document.getElementById('page-loader');
-      if (loader) {
-        loader.classList.add('fade-out');
-        setTimeout(function() {
-          if (loader.parentNode) loader.parentNode.removeChild(loader);
-        }, 500);
-      }
-    }, 380);
+    setTimeout(completeIntro, 300);
   }
 
-  /* ─── 10. MAIN ANIMATION LOOP (3.50s HOLLYWOOD TIMELINE) ─── */
-  function loop(now) {
-    if (done) return;
+  skipBtn.addEventListener('click', function (e) { e.stopPropagation(); handleSkip(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === ' ') { handleSkip(); }
+  });
 
-    if (isSkipping) {
-      var skipElapsed = now - skipStartTime;
-      var skipProgress = clamp(skipElapsed / SKIP_ANIM_TIME, 0, 1);
-      phase = lerp(0.84, 1.0, skipProgress);
-    } else {
-      var elapsed = now - startTime;
-      phase = clamp(elapsed / duration, 0, 1);
-    }
+  soundBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    soundOn = !soundOn;
+    ctx();
+    soundBtn.textContent = soundOn ? 'Sound: ON' : 'Sound: OFF';
+    if (soundOn && !stingPlayed && musicBuf) musicSting(ctx().currentTime + .05, .3);
+  });
 
-    // Precision Sound Cue Triggers
-    if (!isReturning && !prefersReducedMotion) {
-      if (phase >= 0.00 && phase < 0.12) AudioEngine.sub();
-      if (phase >= 0.13 && phase < 0.21) AudioEngine.plane();
-      if (phase >= 0.21 && phase < 0.31) AudioEngine.ocean();
-      if (phase >= 0.31 && phase < 0.40) AudioEngine.underwater();
-      if (phase >= 0.48 && phase < 0.58) AudioEngine.pyramids();
-      if (phase >= 0.75 && phase < 0.84) AudioEngine.silence();
-      if (phase >= 0.84 && phase < 0.95) AudioEngine.impact();
-    }
-
-    // Live Rolling Timecode & Location
-    if (!timecodeEl) timecodeEl = document.getElementById('aqw-timecode');
-    if (!geoEl) geoEl = document.getElementById('aqw-geo-tag');
-
-    if (timecodeEl) {
-      var currentMs = Math.floor(phase * duration);
-      var sec = Math.floor(currentMs / 1000);
-      var frames = Math.floor((currentMs % 1000) / 41.6);
-      timecodeEl.textContent = '00:00:0' + sec + ':' + (frames < 10 ? '0' : '') + frames;
-    }
-
-    render();
-
-    if (phase < 1) {
-      window._aqwIntroRaf = requestAnimationFrame(loop);
-    } else {
-      completeIntro();
+  function resumeAC() {
+    if (ctx()) {
+      ctx().resume();
+      if (!stingPlayed && musicBuf && soundOn) musicSting(ctx().currentTime + .05, .3);
     }
   }
+  window.addEventListener('pointerdown', resumeAC, { once: true });
+  window.addEventListener('keydown', resumeAC, { once: true });
 
-  /* ─── 11. HOLLYWOOD STUDIO CINEMA RENDER PIPELINE ─── */
-  function render() {
-    ctx.clearRect(0, 0, W, H);
-
-    if (prefersReducedMotion) {
-      renderReduced();
-      return;
-    }
-
-    // Master Continuous Camera Push (Hollywood Large-Format Feel)
-    var masterPush = lerp(1.0, 1.07, Ease.inOutCubic(phase));
-    ctx.save();
-    ctx.translate(W * 0.5, H * 0.5);
-    ctx.scale(masterPush, masterPush);
-    ctx.translate(-W * 0.5, -H * 0.5);
-
-    // ── STAGE 1: NARRATIVE HERO SHOTS (0.00s — 2.30s = phase 0.00 — 0.66) ──
-    if (phase < 0.68) {
-      drawNarrativeHeroShots();
-    }
-
-    // ── STAGE 2: THE MEMORY (2.30s — 2.65s = phase 0.65 — 0.76) ──
-    if (phase >= 0.65 && phase <= 0.76) {
-      drawMemorySequence(norm(phase, 0.65, 0.76));
-    }
-
-    // ── STAGE 3: THE TRANSFORMATION (2.65s — 2.95s = phase 0.75 — 0.85) ──
-    if (phase >= 0.75 && phase <= 0.86) {
-      drawTransformationField(norm(phase, 0.75, 0.86));
-    }
-
-    // ── STAGE 4: VOLUMETRIC SEARCHLIGHTS (0.80 — 0.96) ──
-    if (phase > 0.80) {
-      drawTheatricalSearchlights(norm(phase, 0.80, 0.94));
-    }
-
-    // ── STAGE 5: AQUAWAY TOURS LOGO REVEAL (2.95s — 3.35s = phase 0.84 — 0.95) ──
-    if (phase > 0.83) {
-      drawStudioLogoIdent(norm(phase, 0.83, 0.95));
-    }
-
-    // ── STAGE 6: FINAL IMPACT & PORTAL FLY-THROUGH (3.35s — 3.50s = phase 0.94 — 1.00) ──
-    if (phase > 0.93) {
-      drawFinalImpactPortal(norm(phase, 0.93, 1.0));
-    }
-
-    // Environmental Shutter Exposure Flashes Between Narrative Cuts
-    renderEnvironmentalExposureFlashes();
-
-    // 35mm Subtle Film Grain Simulation
-    draw35mmFilmGrain();
-
-    ctx.restore();
-
-    // Skip Button Appearance after 0.6s
-    if (phase > 0.18 && skipBtn.style.opacity === '0') {
-      skipBtn.style.opacity = '0.88';
-    }
-  }
-
-  /* ─── 12. NARRATIVE HERO SHOTS (PURPOSEFUL CAMERA & MOTIVATED LIGHT) ─── */
-  function drawNarrativeHeroShots() {
-    var shots = [
-      // 0.00–0.45s: SHOT 01 — ESCAPE (Door opens, sunlight floods frame)
-      { id: 'escape',   start: 0.00, end: 0.13, geo: 'THE ESCAPE · GOLDEN HOUR',
-        type: 'push',  scaleFrom: 1.05, scaleTo: 1.18, yFrom: 0, yTo: -15, rot: 0 },
-
-      // 0.45–0.75s: SHOT 02 — FLIGHT (Sunlight on cabin window, clouds part)
-      { id: 'flight',   start: 0.14, end: 0.21, geo: '32,000 FT · OVER EGYPT',
-        type: 'pan',   scaleFrom: 1.08, scaleTo: 1.20, xFrom: -25, xTo: 25, rot: -0.003 },
-
-      // 0.75–1.10s: SHOT 03 — RED SEA (Yacht bow, wind moves hair, camera orbits)
-      { id: 'redsea',   start: 0.22, end: 0.31, geo: '27.2579°N 33.8116°E · HURGHADA',
-        type: 'ocean', scaleFrom: 1.08, scaleTo: 1.22, rotFrom: -0.008, rotTo: 0.008 },
-
-      // 1.10–1.40s: SHOT 04 — UNDERWATER (Caustics, dolphin pass, camera tilts up)
-      { id: 'undersea', start: 0.32, end: 0.40, geo: 'GIFTUN ISLANDS · RED SEA',
-        type: 'dive',  scaleFrom: 1.06, scaleTo: 1.20, yFrom: -20, yTo: 20, rot: 0.005 },
-
-      // 1.40–1.70s: SHOT 05 — DESERT (Dunes, 4x4 ridge, sand whip across lens)
-      { id: 'desert',   start: 0.41, end: 0.49, geo: 'EASTERN DESERT · EGYPT',
-        type: 'rush',  scaleFrom: 1.10, scaleTo: 1.25, yFrom: -10, yTo: 15, rot: 0.006 },
-
-      // 1.70–2.05s: SHOT 06 — PYRAMIDS (Hero Shot: Giza Pyramids, pure awe)
-      { id: 'pyramids', start: 0.50, end: 0.59, geo: 'GIZA PLATEAU · CAIRO',
-        type: 'crane', scaleFrom: 1.08, scaleTo: 1.24, yFrom: 20, yTo: -20, rot: 0.003 },
-
-      // 2.05–2.30s: SHOT 07 — LUXOR (Ancient Karnak columns, Nile reflection)
-      { id: 'luxor',    start: 0.59, end: 0.67, geo: 'KARNAK TEMPLE · NILE VALLEY',
-        type: 'pan',   scaleFrom: 1.10, scaleTo: 1.24, xFrom: -30, xTo: 30, rot: -0.003 }
-    ];
-
-    for (var i = 0; i < shots.length; i++) {
-      var s = shots[i];
-      if (phase >= s.start && phase <= s.end) {
-        var localP = norm(phase, s.start, s.end);
-        var alpha = Math.sin(localP * Math.PI);
-        var img = loadedImages[s.id];
-
-        if (geoEl && geoEl.textContent !== s.geo) {
-          geoEl.textContent = s.geo;
-        }
-
-        ctx.save();
-        ctx.globalAlpha = clamp(alpha * 1.35, 0, 1);
-
-        // Motivated Camera Transforms
-        var currentZoom = lerp(s.scaleFrom, s.scaleTo, Ease.inOutCubic(localP));
-        var posX = 0, posY = 0, rotAngle = 0;
-
-        if (s.type === 'push') {
-          posY = lerp(s.yFrom, s.yTo, Ease.inOutCubic(localP));
-        } else if (s.type === 'pan') {
-          posX = lerp(s.xFrom, s.xTo, Ease.inOutCubic(localP));
-          rotAngle = s.rot;
-        } else if (s.type === 'ocean') {
-          rotAngle = lerp(s.rotFrom, s.rotTo, Math.sin(localP * Math.PI));
-          posY = Math.sin(localP * Math.PI * 2) * 6;
-        } else if (s.type === 'dive') {
-          posY = lerp(s.yFrom, s.yTo, Ease.inOutCubic(localP));
-          rotAngle = Math.sin(localP * Math.PI) * 0.006;
-        } else if (s.type === 'rush') {
-          posY = lerp(s.yFrom, s.yTo, Ease.inCubic(localP));
-          rotAngle = s.rot * Math.sin(localP * Math.PI);
-        } else if (s.type === 'crane') {
-          posY = lerp(s.yFrom, s.yTo, Ease.inOutCubic(localP));
-          rotAngle = s.rot * localP;
-        }
-
-        ctx.translate(W * 0.5, H * 0.5);
-        ctx.rotate(rotAngle);
-        ctx.scale(currentZoom, currentZoom);
-        ctx.translate(-W * 0.5 + posX, -H * 0.5 + posY);
-
-        if (img && img.complete && img.naturalWidth) {
-          var imgRatio = img.naturalWidth / img.naturalHeight;
-          var canvasRatio = W / H;
-          var dw, dh, dx, dy;
-          if (canvasRatio > imgRatio) {
-            dw = W;
-            dh = W / imgRatio;
-            dx = 0;
-            dy = (H - dh) * 0.5;
-          } else {
-            dh = H;
-            dw = H * imgRatio;
-            dx = (W - dw) * 0.5;
-            dy = 0;
-          }
-          ctx.drawImage(img, dx, dy, dw, dh);
-        }
-
-        // Scene-Specific Optical Sunlight & Environmental Lighting
-        renderEnvironmentalLighting(s.type, localP, alpha);
-
-        // Film Contrast & Highlight Rolloff
-        var vig = ctx.createRadialGradient(W * 0.5, H * 0.5, Math.min(W, H) * 0.35, W * 0.5, H * 0.5, Math.max(W, H) * 0.78);
-        vig.addColorStop(0, 'rgba(0,0,0,0)');
-        vig.addColorStop(1, 'rgba(2,5,15,0.65)');
-        ctx.fillStyle = vig;
-        ctx.fillRect(0, 0, W, H);
-
-        ctx.restore();
-      }
-    }
-  }
-
-  // Environmental Lighting & Natural Flares
-  function renderEnvironmentalLighting(type, localP, alpha) {
-    ctx.save();
-    ctx.globalCompositeOperation = 'screen';
-
-    if (type === 'push') {
-      // Overexposed Sunlight Floods Frame from Doorway
-      var lightAlpha = Math.pow(localP, 2.5) * alpha * 0.85;
-      var doorG = ctx.createRadialGradient(W * 0.8, H * 0.3, 0, W * 0.8, H * 0.3, W * 0.85);
-      doorG.addColorStop(0,   'rgba(255,248,220,' + lightAlpha + ')');
-      doorG.addColorStop(0.4, 'rgba(255,215,0,'   + (lightAlpha * 0.6) + ')');
-      doorG.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = doorG;
-      ctx.fillRect(0, 0, W, H);
-    } else if (type === 'ocean') {
-      // Natural Anamorphic Water Glints
-      var glint = Math.sin(localP * Math.PI * 4) * 0.5 + 0.5;
-      var waterG = ctx.createRadialGradient(W * 0.6, H * 0.65, 0, W * 0.6, H * 0.65, W * 0.4);
-      waterG.addColorStop(0,   'rgba(255,255,255,' + (alpha * glint * 0.45) + ')');
-      waterG.addColorStop(0.5, 'rgba(0,213,232,'   + (alpha * glint * 0.2)  + ')');
-      waterG.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = waterG;
-      ctx.fillRect(0, 0, W, H);
-    } else if (type === 'dive') {
-      // Underwater Sunbeams Cutting Through Surface
-      var sunX = Math.sin(localP * Math.PI * 2) * 50;
-      var rayG = ctx.createLinearGradient(W * 0.5 + sunX, 0, W * 0.5 - sunX, H);
-      rayG.addColorStop(0,   'rgba(0,255,230,' + (alpha * 0.40) + ')');
-      rayG.addColorStop(0.6, 'rgba(0,184,200,' + (alpha * 0.15) + ')');
-      rayG.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = rayG;
-      ctx.fillRect(0, 0, W, H);
-    } else if (type === 'rush') {
-      // Whip of Sand Blowing Across the Lens
-      ctx.strokeStyle = 'rgba(255,210,120,' + (alpha * 0.55) + ')';
-      ctx.lineWidth = 1.8;
-      for (var s = 0; s < 10; s++) {
-        var sx = (s * W / 10 + (localP * W * 1.6)) % W;
-        var sy = H * 0.65 + Math.sin(s + localP * 6) * (H * 0.2);
-        ctx.beginPath();
-        ctx.moveTo(sx, sy);
-        ctx.lineTo(sx + 40, sy + 8);
-        ctx.stroke();
-      }
-    } else if (type === 'crane') {
-      // Warm Atmospheric Pyramid Sun Sweep
-      var pyX = lerp(W * 0.25, W * 0.75, localP);
-      var pyG = ctx.createLinearGradient(pyX - 180, 0, pyX + 180, H);
-      pyG.addColorStop(0,   'rgba(255,215,0,0)');
-      pyG.addColorStop(0.5, 'rgba(255,235,170,' + (alpha * 0.35) + ')');
-      pyG.addColorStop(1,   'rgba(255,215,0,0)');
-      ctx.fillStyle = pyG;
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    ctx.restore();
-  }
-
-  /* ─── 13. MOTIVATED ENVIRONMENTAL EXPOSURE FLASHES ─── */
-  function renderEnvironmentalExposureFlashes() {
-    var flashCues = [
-      { id: 'c1', t: 0.13, color: 'gold' },   // Escape -> Flight (Window Light Match)
-      { id: 'c2', t: 0.21, color: 'aqua' },   // Flight -> Red Sea (Clouds to Sea)
-      { id: 'c3', t: 0.31, color: 'cyan' },   // Red Sea -> Underwater (Water Dive)
-      { id: 'c4', t: 0.40, color: 'gold' },   // Underwater -> Desert (Sun Surface Burst)
-      { id: 'c5', t: 0.49, color: 'orange' }, // Desert -> Pyramids (Sand Whip Match)
-      { id: 'c6', t: 0.58, color: 'gold' }    // Pyramids -> Luxor (Sunlight Colonnade Match)
-    ];
-
-    var flashWindow = 0.042; // ~147ms natural exposure recovery (more cinematic punch)
-
-    for (var i = 0; i < flashCues.length; i++) {
-      var cue = flashCues[i];
-      var diff = Math.abs(phase - cue.t);
-
-      if (diff < flashWindow) {
-        var rawIntensity = 1.0 - (diff / flashWindow);
-        var flashIntensity = Ease.outExpo(rawIntensity);
-
-        AudioEngine.whip(cue.id);
-        renderLayeredExposureBurst(flashIntensity, cue.color);
-      }
-    }
-  }
-
-  function renderLayeredExposureBurst(intensity, colorType) {
-    if (intensity <= 0.02) return;
-    ctx.save();
-
-    var flareCy = H * 0.5;
-    var streakAlpha = intensity * 0.95;
-
-    // PASS 1: Screen Blend Exposure Highlight
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = 'rgba(255,255,255,' + (intensity * 0.85) + ')';
-    ctx.fillRect(0, 0, W, H);
-
-    // PASS 2: 35mm Anamorphic Lens Flare Line
-    var sg = ctx.createLinearGradient(0, flareCy, W, flareCy);
-    sg.addColorStop(0,    'rgba(255,255,255,0)');
-    if (colorType === 'aqua') {
-      sg.addColorStop(0.35, 'rgba(0,213,232,' + (streakAlpha * 0.7) + ')');
-      sg.addColorStop(0.50, 'rgba(255,255,255,' + streakAlpha + ')');
-      sg.addColorStop(0.65, 'rgba(0,213,232,' + (streakAlpha * 0.7) + ')');
-    } else if (colorType === 'orange') {
-      sg.addColorStop(0.35, 'rgba(255,165,0,' + (streakAlpha * 0.7) + ')');
-      sg.addColorStop(0.50, 'rgba(255,255,255,' + streakAlpha + ')');
-      sg.addColorStop(0.65, 'rgba(255,165,0,' + (streakAlpha * 0.7) + ')');
-    } else if (colorType === 'cyan') {
-      sg.addColorStop(0.35, 'rgba(0,255,230,' + (streakAlpha * 0.7) + ')');
-      sg.addColorStop(0.50, 'rgba(255,255,255,' + streakAlpha + ')');
-      sg.addColorStop(0.65, 'rgba(0,255,230,' + (streakAlpha * 0.7) + ')');
-    } else {
-      sg.addColorStop(0.35, 'rgba(255,245,210,' + (streakAlpha * 0.7) + ')');
-      sg.addColorStop(0.50, 'rgba(255,255,255,' + streakAlpha + ')');
-      sg.addColorStop(0.65, 'rgba(255,245,210,' + (streakAlpha * 0.7) + ')');
-    }
-    sg.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = sg;
-    ctx.fillRect(0, flareCy - 22, W, 44);
-
-    // PASS 3: Central White-Hot Exposure Core
-    var bg = ctx.createRadialGradient(W * 0.5, H * 0.5, 0, W * 0.5, H * 0.5, Math.min(W, H) * 0.72 * intensity);
-    bg.addColorStop(0,    'rgba(255,255,255,' + (intensity * 0.98) + ')');
-    bg.addColorStop(0.25, 'rgba(255,250,230,' + (intensity * 0.75) + ')');
-    bg.addColorStop(0.65, 'rgba(212,175,55,'  + (intensity * 0.25) + ')');
-    bg.addColorStop(1,    'rgba(0,0,0,0)');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.restore();
-  }
-
-  /* ─── 14. THE MEMORY (FAST EDITORIAL RHYTHM 2.30s - 2.65s) ─── */
-  function drawMemorySequence(mPhase) {
-    var memoryShots = ['redsea', 'undersea', 'desert', 'pyramids', 'luxor', 'finalhero'];
-    var idx = Math.floor(mPhase * memoryShots.length * 2.5) % memoryShots.length;
-    var img = loadedImages[memoryShots[idx]];
-
-    if (geoEl) geoEl.textContent = 'THE MEMORY · RED SEA · EGYPT';
-
-    ctx.save();
-    ctx.globalAlpha = 0.92;
-
-    if (img && img.complete && img.naturalWidth) {
-      // Cover-fit: maintain aspect ratio, fill frame
-      var ir = img.naturalWidth / img.naturalHeight;
-      var cr = W / H;
-      var mw, mh, mx, my;
-      if (cr > ir) { mw = W; mh = W / ir; mx = 0; my = (H - mh) * 0.5; }
-      else         { mh = H; mw = H * ir; mx = (W - mw) * 0.5; my = 0; }
-      ctx.drawImage(img, mx, my, mw, mh);
-    }
-
-    // Environmental Light Strobe on Cut
-    var strobe = Math.sin(mPhase * Math.PI * 7);
-    if (strobe > 0.4) {
-      ctx.fillStyle = 'rgba(255,255,255,' + (strobe * 0.65) + ')';
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    ctx.restore();
-  }
-
-  /* ─── 15. THE TRANSFORMATION (SILENCE & GOLDEN STARDUST 2.65s - 2.95s) ─── */
-  function drawTransformationField(tPhase) {
-    if (geoEl) geoEl.textContent = 'AQUAWAY LUXURY TRAVEL';
-
-    ctx.save();
-    // Deep Cinematic Space
-    ctx.fillStyle = COLORS.black;
-    ctx.fillRect(0, 0, W, H);
-
-    // Camera Fly-Through into Light Field
-    var flyScale = lerp(0.85, 1.35, Ease.inOutCubic(tPhase));
-    ctx.translate(W * 0.5, H * 0.5);
-    ctx.scale(flyScale, flyScale);
-    ctx.translate(-W * 0.5, -H * 0.5);
-
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      p.x = lerp(p.x, p.targetX, 0.08);
-      p.y = lerp(p.y, p.targetY, 0.08);
-
-      var pAlpha = clamp(Math.sin(tPhase * Math.PI), 0, 1) * 0.90;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.isAqua
-        ? 'rgba(0,213,232,' + pAlpha + ')'
-        : 'rgba(255,215,0,'  + pAlpha + ')';
-      ctx.fill();
-    }
-
-    // Central Golden Light Birth
-    var birthG = ctx.createRadialGradient(W * 0.5, H * 0.5, 0, W * 0.5, H * 0.5, Math.min(W, H) * 0.45 * tPhase);
-    birthG.addColorStop(0,   'rgba(255,255,255,' + (tPhase * 0.9) + ')');
-    birthG.addColorStop(0.4, 'rgba(212,175,55,'  + (tPhase * 0.5) + ')');
-    birthG.addColorStop(0.8, 'rgba(0,184,200,'   + (tPhase * 0.2) + ')');
-    birthG.addColorStop(1,   'rgba(0,0,0,0)');
-    ctx.fillStyle = birthG;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.restore();
-  }
-
-  /* ─── 16. THEATRICAL VOLUMETRIC SEARCHLIGHTS ─── */
-  function drawTheatricalSearchlights(beamPhase) {
-    ctx.save();
-    var globalAlpha = Ease.outCubic(beamPhase);
-
-    for (var i = 0; i < beams.length; i++) {
-      var beam = beams[i];
-      var angleRad = lerp(beam.startAngle, beam.endAngle, globalAlpha) * Math.PI / 180;
-      var bLen = Math.max(W, H) * 2.0;
-
-      var bx1 = beam.x, by1 = beam.y;
-      var bx2 = bx1 + Math.cos(angleRad) * bLen;
-      var by2 = by1 + Math.sin(angleRad) * bLen;
-      var dx = bx2 - bx1, dy = by2 - by1;
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      var nx = -dy / dist, ny = dx / dist;
-      var halfW = beam.width * (0.5 + globalAlpha * 1.5);
-
-      var grad = ctx.createLinearGradient(
-        bx1 + nx * halfW, by1 + ny * halfW,
-        bx1 - nx * halfW, by1 - ny * halfW
-      );
-      var a = globalAlpha * 0.88;
-      grad.addColorStop(0,    beam.color + '0)');
-      grad.addColorStop(0.14, beam.color + (a * 0.16).toFixed(3) + ')');
-      grad.addColorStop(0.50, beam.color + (a * 0.78).toFixed(3) + ')');
-      grad.addColorStop(0.86, beam.color + (a * 0.16).toFixed(3) + ')');
-      grad.addColorStop(1,    beam.color + '0)');
-
-      ctx.beginPath();
-      ctx.moveTo(bx1 + nx * 2,  by1 + ny * 2);
-      ctx.lineTo(bx2 + nx * halfW, by2 + ny * halfW);
-      ctx.lineTo(bx2 - nx * halfW, by2 - ny * halfW);
-      ctx.lineTo(bx1 - nx * 2,  by1 - ny * 2);
-      ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  /* ─── 17. AQUAWAY TOURS STUDIO IDENT (2.95s - 3.35s) ─── */
-  function drawStudioLogoIdent(lPhase) {
-    var alpha = Ease.outCubic(lPhase);
-    var logoSize = Math.min(W, H) * 0.20;
-    var cx = W * 0.5;
-    var cy = H * 0.5 - logoSize * 0.32;
-    var img = loadedImages['logo'];
-
-    if (geoEl) geoEl.textContent = 'HURGHADA · RED SEA · EGYPT';
-
-    ctx.save();
-    ctx.globalAlpha = alpha;
-
-    // Royal Gold Rim Light & Aqua Edge Aura
-    var glowSize = logoSize * 1.95;
-    var rimG = ctx.createRadialGradient(cx, cy, logoSize * 0.2, cx, cy, glowSize);
-    rimG.addColorStop(0,   'rgba(212,175,55,' + (alpha * 0.58) + ')');
-    rimG.addColorStop(0.5, 'rgba(0,184,200,'  + (alpha * 0.20) + ')');
-    rimG.addColorStop(1,   'rgba(0,0,0,0)');
-    ctx.fillStyle = rimG;
-    ctx.fillRect(cx - glowSize, cy - glowSize, glowSize * 2, glowSize * 2);
-
-    ctx.translate(cx, cy);
-    var scale = lerp(0.92, 1.0, Ease.outCubic(lPhase));
-    ctx.scale(scale, scale);
-
-    // Reveal Official AquaWay Emblem
-    if (img && img.complete && img.naturalWidth) {
-      ctx.drawImage(img, -logoSize * 0.5, -logoSize * 0.5, logoSize, logoSize);
-
-      // Anamorphic Light Sweep across Emblem
-      if (lPhase > 0.20 && lPhase < 0.85) {
-        var sweepX = lerp(-logoSize, logoSize, norm(lPhase, 0.20, 0.85));
-        var swG = ctx.createLinearGradient(sweepX - 25, 0, sweepX + 25, 0);
-        swG.addColorStop(0, 'rgba(255,255,255,0)');
-        swG.addColorStop(0.5, 'rgba(255,255,255,0.72)');
-        swG.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.fillStyle = swG;
-        ctx.fillRect(-logoSize * 0.5, -logoSize * 0.5, logoSize, logoSize);
-      }
-    }
-
-    ctx.restore();
-
-    // 5-Stop Royal Gold Typography (AQUAWAY TOURS)
-    if (lPhase > 0.30) {
-      var tAlpha = Ease.outCubic(norm(lPhase, 0.30, 1.0));
-      var fontSize = Math.max(16, Math.min(W * 0.042, 38));
-      var nameY = cy + logoSize * 0.85;
-
-      ctx.save();
-      ctx.globalAlpha = tAlpha;
-      // Note: ctx.letterSpacing is not a Canvas 2D API — spacing is handled via font tracking
-      ctx.font = '700 ' + fontSize + "px 'Playfair Display', Georgia, serif";
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      var tg = ctx.createLinearGradient(cx - 130, nameY, cx + 130, nameY);
-      tg.addColorStop(0,   COLORS.goldDark);
-      tg.addColorStop(0.28,COLORS.goldRoyal);
-      tg.addColorStop(0.50,COLORS.goldBright);
-      tg.addColorStop(0.72,COLORS.goldRoyal);
-      tg.addColorStop(1,   COLORS.goldDark);
-      ctx.fillStyle = tg;
-      ctx.shadowColor = COLORS.goldRoyal;
-      ctx.shadowBlur = 14 * tAlpha;
-      // Manual letter-spaced render for cinematic tracking effect
-      var title = 'AQUAWAY TOURS';
-      var trackW = fontSize * 0.35; // tracking: 0.35em between chars
-      var totalTW = title.length * (fontSize * 0.62) + (title.length - 1) * trackW;
-      var startX = cx - totalTW * 0.5;
-      for (var ci = 0; ci < title.length; ci++) {
-        var ch = title[ci];
-        var cw = ctx.measureText(ch).width;
-        ctx.fillText(ch, startX + cw * 0.5, nameY);
-        startX += cw + trackW;
-      }
-      ctx.shadowBlur = 0;
-
-      // Sub-Tagline Signature
-      var tagSize = Math.max(9, fontSize * 0.38);
-      ctx.font = '500 ' + tagSize + "px 'Inter', sans-serif";
-      ctx.fillStyle = COLORS.warmWhite;
-      ctx.globalAlpha = tAlpha * 0.85;
-      ctx.fillText('HURGHADA  ·  RED SEA  ·  EGYPT', cx, nameY + fontSize * 1.55);
-      ctx.restore();
-    }
-  }
-
-  /* ─── 18. FINAL IMPACT & PORTAL TRANSITION (3.35s - 3.50s) ─── */
-  function drawFinalImpactPortal(pPhase) {
-    var intensity = Ease.outExpo(pPhase);
-    var flareCx = W * 0.5, flareCy = H * 0.5;
-
-    ctx.save();
-    // Anamorphic Beam Expansion
-    var sg = ctx.createLinearGradient(0, flareCy, W, flareCy);
-    sg.addColorStop(0,    'rgba(255,255,255,0)');
-    sg.addColorStop(0.45, 'rgba(255,255,255,' + (intensity * 0.98) + ')');
-    sg.addColorStop(0.55, 'rgba(255,245,210,' + (intensity * 0.98) + ')');
-    sg.addColorStop(1,    'rgba(255,255,255,0)');
-    ctx.fillStyle = sg;
-    ctx.fillRect(0, flareCy - 28, W, 56);
-
-    // Pure White-Gold Expansion into Homepage Hero
-    var bg = ctx.createRadialGradient(flareCx, flareCy, 0, flareCx, flareCy, Math.max(W, H) * 0.85 * intensity);
-    bg.addColorStop(0,   'rgba(255,255,255,' + intensity + ')');
-    bg.addColorStop(0.4, 'rgba(255,245,210,' + (intensity * 0.85) + ')');
-    bg.addColorStop(0.8, 'rgba(0,184,200,'   + (intensity * 0.45) + ')');
-    bg.addColorStop(1,   'rgba(0,0,0,'       + intensity + ')');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.restore();
-  }
-
-  // 35mm Subtle Film Grain Simulation
-  function draw35mmFilmGrain() {
-    ctx.save();
-    ctx.globalAlpha = 0.035;
-    for (var i = 0; i < 35; i++) {
-      var gx = Math.random() * W;
-      var gy = Math.random() * H;
-      var gr = Math.random() * 1.5 + 0.5;
-      ctx.fillStyle = Math.random() > 0.5 ? '#ffffff' : '#000000';
-      ctx.fillRect(gx, gy, gr, gr);
-    }
-    ctx.restore();
-  }
-
-  // Reduced Motion Fallback
-  function renderReduced() {
-    ctx.fillStyle = COLORS.black;
-    ctx.fillRect(0, 0, W, H);
-
-    if (phase > 0.15) {
-      var alpha = Ease.inOutCubic(norm(phase, 0.15, 0.70));
-      var logoSize = Math.min(W, H) * 0.20;
-      var cx = W * 0.5, cy = H * 0.5 - logoSize * 0.32;
-      var img = loadedImages['logo'];
-
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      if (img && img.complete) {
-        ctx.drawImage(img, cx - logoSize * 0.5, cy - logoSize * 0.5, logoSize, logoSize);
-      }
-      ctx.font = "700 24px 'Playfair Display', Georgia, serif";
-      ctx.textAlign = 'center';
-      ctx.fillStyle = COLORS.goldRoyal;
-      ctx.fillText('AQUAWAY TOURS', cx, cy + logoSize * 0.85);
-      ctx.restore();
-    }
-  }
-
-  /* ─── 19. BOOTSTRAP ─── */
+  /* ─── 8. BOOTSTRAP ─── */
   function startIntro() {
     var loader = document.getElementById('page-loader');
     if (loader) {
@@ -1197,37 +1197,23 @@
       loader.style.pointerEvents = 'none';
     }
 
-    resize();
-    window.addEventListener('resize', resize);
-
-    var onKey = function(e) {
-      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
-        handleSkip();
-        document.removeEventListener('keydown', onKey);
+    // Keep the site's looping music silent during the intro
+    try {
+      if (window.aquawayMusic && window.aquawayMusic.audio) {
+        window.aquawayMusic.audio.muted = true;
       }
-    };
-    document.addEventListener('keydown', onKey);
-    skipBtn.addEventListener('click', handleSkip);
+    } catch (e) {}
 
-    var onFirstTouch = function() {
-      AudioEngine.init();
-      AudioEngine.ensureRunning();
-      document.removeEventListener('click', onFirstTouch);
-      document.removeEventListener('touchstart', onFirstTouch);
-    };
-    document.addEventListener('click', onFirstTouch, { once: true });
-    document.addEventListener('touchstart', onFirstTouch, { once: true });
+    var styleEl = document.createElement('style');
+    styleEl.id = 'aqw-intro-css';
+    styleEl.textContent = css;
+    document.head.appendChild(styleEl);
 
     document.body.appendChild(overlay);
     document.body.style.overflow = 'hidden';
 
-    AudioEngine.init();
-    startTime = performance.now();
-    window._aqwIntroRaf = requestAnimationFrame(loop);
-
-    setTimeout(function() {
-      if (!done) completeIntro();
-    }, 4500);
+    addTimeout(runIntro, 350);
+    addTimeout(function () { overlay.classList.add('show-skip'); }, 700);
   }
 
   if (document.readyState === 'loading') {
@@ -1235,5 +1221,4 @@
   } else {
     startIntro();
   }
-
 })();
