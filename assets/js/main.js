@@ -23,41 +23,6 @@ function throttle(fn, wait) {
   }
 })();
 
-// ---- SEO Content Expansion (Scale to 1000) ----
-const SEO_TRIP_CONTENT = {
-  "orange-bay": {
-    en: "Orange Bay is Hurghada's most iconic island destination, often called the 'Egyptian Caribbean'. This shallow turquoise lagoon is perfect for families and couples seeking a photogenic paradise. The bay is famous for its wooden swing in the water and its eco-friendly architecture. Our trip includes two distinct snorkeling stops at coral reefs teeming with Red Sea biodiversity, followed by a gourmet lunch served on the island. Guests can enjoy the premium lounge area, take stunning photos, and relax in the calmest waters in the Giftun Island National Park.",
-    ar: "تعتبر أورانج باي أكثر وجهات الجزر شهرة في الغردقة، وغالبًا ما تسمى 'كاريبي مصر'. هذه البحيرة الفيروزية الضحلة مثالية للعائلات والأزواج الذين يبحثون عن جنة للتصوير الفوتوغرافي. تشتهر منطقة الخليج بالأرجوحة الخشبية في الماء وهندستها المعمارية الصديقة للبيئة. تشمل رحلتنا وقفتين متميزتين للغطس في الشعاب المرجانية التي تعج بالتنوع البيولوجي في البحر الأحمر، يليها غداء فاخر يقدم في الجزيرة."
-  },
-  "dolphin-house": {
-    en: "The Dolphin House (Shaab El Fanous) is a protected reef area where wild spinner dolphins are frequently spotted. Unlike captive dolphin shows, this is a natural encounter where we respect the animals' habitat. Our expert guides ensure a safe and ethical experience. The trip also features two snorkeling sessions at vibrant reefs where you can see clownfish, rays, and sea turtles. Onboard, our chef prepares a fresh Mediterranean-style buffet. This is Hurghada's #1 eco-tour for nature lovers and families.",
-    ar: "بيت الدرافيل (شعب الفانوس) هي منطقة شعاب مرجانية محمية حيث يتم رصد الدلافين الدوارة البرية بشكل متكرر. على عكس عروض الدلافين الأسيرة، فهذا لقاء طبيعي حيث نحترم موطن الحيوانات. يضمن مرشدونا الخبراء تجربة آمنة وأخلاقية."
-  },
-  "super-safari": {
-    en: "Experience the vast Egyptian Eastern Desert in one high-octane day. Our Super Safari combines quad biking across the dunes, a rugged 4x4 jeep adventure, and a traditional camel ride. You will visit an authentic Bedouin village to learn about their ancient desert traditions, taste Bedouin bread, and enjoy a traditional tea ceremony. The day concludes with a spectacular sunset view, followed by a BBQ dinner and an Oriental show featuring Tanoura dancing and fire breathers under the Saharan starlight.",
-    ar: "استمتع بتجربة الصحراء الشرقية المصرية الواسعة في يوم واحد مليء بالإثارة. يجمع السوبر سفاري بين ركوب الدراجات الرباعية عبر الكثبان الرملية، ومغامرة جيب 4x4 الوعرة، وركوب الجمال التقليدي."
-  }
-};
-
-function renderSEOContent() {
-  const container = document.querySelector('.trip-main-v0');
-  if (!container) return;
-  const slug = location.pathname.split('/').pop().replace('.html','');
-  const seo = SEO_TRIP_CONTENT[slug];
-  if (!seo) return;
-
-  const content = getLang(seo);
-  if (!content) return;
-
-  const box = document.createElement('div');
-  box.className = 'content-box-v0 seo-expansion-v0';
-  box.innerHTML = `
-    <h2 class="section-title-small-v0">${t('trip_overview')}</h2>
-    <div class="seo-text-v0" style="line-height:1.8; color:var(--silver-light); font-size:1.05rem;">${content}</div>
-  `;
-  container.prepend(box);
-}
-
 // ---- Auto-render Rich Content on Trip Detail Pages ----
 function renderTripDetailContent() {
   if (!document.querySelector('.trip-detail-page')) return;
@@ -80,7 +45,7 @@ function renderTripDetailContent() {
        video.playsInline = true;
        video.style.opacity = "0";
        video.style.transition = "opacity 1.5s ease";
-       video.innerHTML = `<source src="../${tripData.video}" type="video/mp4">`;
+       video.innerHTML = `<source src="/${tripData.video}" type="video/mp4">`;
        heroSection.prepend(video);
        video.onloadeddata = () => video.style.opacity = "1";
     }
@@ -289,16 +254,6 @@ function applyTranslations() {
   if (!isTripPage) { // Homepage SEO
     if (T.seo_title) document.title = T.seo_title;
     if (metaDesc && T.seo_desc) metaDesc.setAttribute('content', T.seo_desc);
-  } else { // Trip Pages SEO
-    const slug = window.location.pathname.split('/').pop().replace('.html','');
-    const tripsArray = (typeof TRIPS !== 'undefined') ? TRIPS : [];
-    const trip = tripsArray.find(t => t.slug === slug);
-    if (trip) {
-       const tripName = typeof getLang === 'function' ? getLang(trip.name) : trip.slug;
-       const tripDesc = typeof getLang === 'function' ? getLang(trip.desc) : '';
-       document.title = `${tripName} | Aquaway Tours`;
-       if (metaDesc) metaDesc.setAttribute('content', tripDesc);
-    }
   }
 
   // Inject Dynamic JSON-LD structured data for Google
@@ -625,7 +580,7 @@ function renderTrips(filter = 'all') {
         <div class="trip-card-footer">
           <a href="${detailLink}" class="btn-details">${t('see_details')}</a>
           <a href="${waFull}" target="_blank" rel="noopener" class="btn-whatsapp">
-            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.845L.057 23.428a    .615.615l5.583-1.467A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-4.997-1.366l-.36-.213-3.713.976.992-3.617-.232-.374A9.818 9.818 0 0112 2.182c5.423 0 9.818 4.395 9.818 9.818 0 5.424-4.395 9.818-9.818 9.818z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.845L.057 23.428a.5.5 0 00.615.615l5.583-1.467A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-4.997-1.366l-.36-.213-3.713.976.992-3.617-.232-.374A9.818 9.818 0 0112 2.182c5.423 0 9.818 4.395 9.818 9.818 0 5.424-4.395 9.818-9.818 9.818z"/></svg>
             ${t('book_whatsapp')}
           </a>
         </div>
@@ -809,7 +764,7 @@ function renderRelatedTripsDynamic() {
         <div class="trip-card-footer">
           <a href="${detailLink}" class="btn-details">${t('see_details')}</a>
           <a href="${waFull}" target="_blank" rel="noopener" class="btn-whatsapp">
-            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.845L.057 23.428a    .615.615l5.583-1.467A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-4.997-1.366l-.36-.213-3.713.976.992-3.617-.232-.374A9.818 9.818 0 0112 2.182c5.423 0 9.818 4.395 9.818 9.818 0 5.424-4.395 9.818-9.818 9.818z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.845L.057 23.428a.5.5 0 00.615.615l5.583-1.467A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-4.997-1.366l-.36-.213-3.713.976.992-3.617-.232-.374A9.818 9.818 0 0112 2.182c5.423 0 9.818 4.395 9.818 9.818 0 5.424-4.395 9.818-9.818 9.818z"/></svg>
             ${t('book_whatsapp')}
           </a>
         </div>
@@ -1061,8 +1016,7 @@ const ComponentManager = {
     // ---- PWA Service Worker Registration ----
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        const swPath = this.base ? `${this.base}sw.js` : './sw.js';
-        navigator.serviceWorker.register(swPath)
+        navigator.serviceWorker.register('/service-worker.js')
           .catch(err => console.warn('Service Worker registration failed:', err));
       });
     }
@@ -1086,7 +1040,6 @@ const ComponentManager = {
 
       if (this.isSub) {
         renderTripDetailContent();
-        renderSEOContent();
         renderRelatedTripsDynamic();
         this.renderBookingForm();
       }

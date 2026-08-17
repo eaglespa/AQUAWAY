@@ -42,7 +42,7 @@
 
 ### 3. Ozaria Island Luxury Escape
 - **Slug / URL:** https://www.aquaway.tours/trips/ozaria-island.html
-- **Price:** €65 per adult
+- **Price:** €55 per adult
 - **Duration:** 8 hours (09:00 – 17:00)
 - **Category:** Island / Luxury Boho-Chic
 - **Highlights:** Hurghada's newest boutique luxury beach island, plush cabanas, gourmet dining, artisan mocktails, turquoise lagoons.

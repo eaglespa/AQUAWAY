@@ -23,7 +23,7 @@ class AudioController {
 
   createElements() {
     const isSubPage = window.location.pathname.includes("/trips/");
-    const audioPath = isSubPage ? "../assets/3.mp3" : "assets/3.mp3";
+    const audioPath = "/assets/3.mp3";
 
     this.audio = document.createElement("audio");
     this.audio.id = "bg-music";

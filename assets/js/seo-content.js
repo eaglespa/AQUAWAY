@@ -81,6 +81,7 @@ const SEO_TRIP_CONTENT = {
 
 function renderSEOContent() {
   if (!document.querySelector('.trip-detail-page')) return;
+  if (document.querySelector('.seo-expansion-v0')) return;
   const slug = location.pathname.split('/').pop().replace('.html','');
   const seo = SEO_TRIP_CONTENT[slug];
   if (!seo) return;
