@@ -1075,19 +1075,19 @@
   function runIntro() {
     if (timer) { clearTimeout(timer); timer = null; }
     if (tcTimer) { clearInterval(tcTimer); tcTimer = null; }
-    stage.classList.remove('st-boot', 'st-tc', 'st-bg-deep', 'st-kicker', 'st-clap', 'st-kicker-off',
+    overlay.classList.remove('st-boot', 'st-tc', 'st-bg-deep', 'st-kicker', 'st-clap', 'st-kicker-off',
       'st-bubbles', 'st-ripple', 'st-aqua', 'st-aq-sweep', 'st-cap1', 'st-quickflash', 'st-shake',
       'st-anam1', 'st-iris1', 'st-aqua-off', 'st-bg-gold', 'st-ember', 'st-cap2', 'st-way', 'st-waypulse',
       'st-iris2', 'st-way-off', 'st-bg-sunset', 'st-boat', 'st-birds', 'st-cap3', 'st-tours',
       'st-bloom', 'st-stack-off', 'st-megaflash', 'st-anam2', 'st-shake3', 'st-bg-night',
       'st-rays', 'st-circledraw', 'st-emblem', 'st-logo', 'st-shine', 'st-lockup', 'st-location');
-    void stage.offsetWidth;
+    void overlay.offsetWidth;
 
     Object.keys(STATES).forEach(function (k) {
       var s = STATES[k];
       addTimeout(function () {
-        if (s.off) stage.classList.remove('st-' + k);
-        else stage.classList.add('st-' + k);
+        if (s.off) overlay.classList.remove('st-' + k);
+        else overlay.classList.add('st-' + k);
       }, s.t);
     });
 
