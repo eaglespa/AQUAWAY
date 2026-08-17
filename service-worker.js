@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aquaway-v6';
+const CACHE_NAME = 'aquaway-v7';
 const ASSETS = [
   './',
   'index.html',
@@ -12,7 +12,7 @@ const ASSETS = [
   'assets/js/effects.js?v=3',
   'assets/js/audio.js?v=3',
   'assets/js/social-proof.js?v=3',
-  'assets/js/cinematic-intro.js?v=2',
+  'assets/js/cinematic-intro.js?v=3',
   'assets/images/logo.webp',
   'assets/images/gallery-1.webp',
   'manifest.json?v=3'

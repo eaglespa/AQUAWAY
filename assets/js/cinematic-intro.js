@@ -1135,6 +1135,7 @@
     done = true;
     if (timer) clearTimeout(timer);
     if (tcTimer) clearInterval(tcTimer);
+    for (var i = 0; i < timeouts.length; i++) clearTimeout(timeouts[i]);
 
     try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
 
@@ -1214,6 +1215,7 @@
 
     addTimeout(runIntro, 350);
     addTimeout(function () { overlay.classList.add('show-skip'); }, 700);
+    addTimeout(completeIntro, 1650);
   }
 
   if (document.readyState === 'loading') {
