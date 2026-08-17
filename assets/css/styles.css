@@ -4364,3 +4364,403 @@ footer {
 .footer-emails { display: flex; flex-direction: column; }
 .footer-email-link { margin-bottom: 4px; }
 
+/* ====================================================
+   TRIP DETAIL PAGE RESPONSIVE STYLES
+   ==================================================== */
+
+@media (max-width: 1024px) {
+  .trip-hero-v0 {
+    height: 70vh;
+    min-height: 450px;
+    padding-bottom: 3rem;
+  }
+  .trip-page-title-v0 {
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  }
+  .trip-page-meta-v0 {
+    gap: 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Trip Hero */
+  .trip-hero-v0 {
+    height: auto;
+    min-height: 60vh;
+    min-height: 60svh;
+    padding: 4rem 0 3rem;
+    display: block;
+  }
+  .trip-hero-content-v0 {
+    padding: 0 1rem;
+    text-align: center;
+  }
+  .trip-back-btn {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    justify-content: center;
+    width: 100%;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    margin: 0 auto 0.75rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.7rem;
+  }
+  .trip-page-title-v0 {
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .trip-page-meta-v0 {
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+  }
+  .trip-page-meta-v0 .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+  .trip-page-meta-v0 .meta-item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb-nav {
+    padding: 80px 1rem 0 !important;
+    font-size: 0.8rem;
+  }
+
+  /* Content boxes */
+  .content-box-v0 {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .section-title-small-v0 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .description-text-v0 {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* Gallery Grid - Trip Detail Page */
+  .trip-detail-page .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .gallery-item {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+  }
+  .gallery-item-overlay {
+    padding: 0.75rem;
+  }
+  .gallery-zoom-icon {
+    font-size: 1.2rem;
+  }
+
+  /* Related Trips Section */
+  .trips-grid-v0 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .trip-card {
+    max-width: 100%;
+  }
+  .trip-card-img {
+    aspect-ratio: 16/9;
+  }
+
+  /* Trip Sidebar / Booking Card */
+  .trip-sidebar-v0 {
+    margin-top: 2rem;
+  }
+  .trip-info-card {
+    position: static;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .trip-info-price {
+    font-size: 2.5rem;
+  }
+  .trip-info-price span {
+    font-size: 0.9rem;
+  }
+  .trip-info-list {
+    margin: 1.5rem 0;
+  }
+  .trip-info-item {
+    padding: 0.75rem 0;
+    font-size: 0.9rem;
+  }
+  .trip-book-btn {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 40px;
+  }
+  .inclusions-box {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+  .inclusion-item {
+    font-size: 0.85rem;
+  }
+  .trust-card {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .trust-text {
+    font-size: 0.8rem;
+  }
+
+  /* Journey Map */
+  .journey-map-v1 {
+    padding: 2rem 1rem;
+    margin: 2rem 0;
+    border-radius: 12px;
+  }
+  .journey-svg {
+    min-width: 400px;
+  }
+
+  /* Sticky Booking Bar */
+  #sticky-booking-bar-v0 {
+    height: 70px;
+    padding: 0 1rem;
+  }
+  .sticky-bar-price {
+    font-size: 1.3rem;
+  }
+  .sticky-booking-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Trip Hero */
+  .trip-hero-v0 {
+    min-height: 50vh;
+    min-height: 50svh;
+    padding: 3rem 0 2rem;
+  }
+  .trip-back-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.8rem;
+  }
+  .trip-page-title-v0 {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
+  .trip-page-meta-v0 {
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .trip-page-meta-v0 .meta-item svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb-nav {
+    padding: 70px 0.75rem 0 !important;
+    font-size: 0.75rem;
+  }
+
+  /* Container padding */
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  /* Content boxes */
+  .content-box-v0 {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  .section-title-small-v0 {
+    font-size: 1.3rem;
+  }
+  .description-text-v0 {
+    font-size: 0.95rem;
+  }
+
+  /* Gallery Grid - Single column on very small screens */
+  .trip-detail-page .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3;
+  }
+
+  /* Related Trips */
+  .related-trips-section-v0 {
+    padding: 1rem;
+  }
+  .trip-card-footer {
+    flex-direction: column;
+  }
+  .trip-card-footer a {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Booking Card */
+  .trip-info-card {
+    padding: 1.25rem;
+  }
+  .trip-info-price {
+    font-size: 2rem;
+  }
+  .trip-info-item {
+    font-size: 0.85rem;
+    padding: 0.6rem 0;
+  }
+  .trip-book-btn {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+  .inclusion-item {
+    font-size: 0.8rem;
+  }
+  .trust-text {
+    font-size: 0.75rem;
+  }
+
+  /* Trip Detail Columns */
+  .trip-detail-cols {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .trip-detail-col {
+    padding: 1rem;
+  }
+  .trip-detail-col h4 {
+    font-size: 0.9rem;
+  }
+  .trip-detail-col li {
+    font-size: 0.85rem;
+  }
+
+  /* FAQ */
+  .faq-q-v0 {
+    padding: 1rem 1rem;
+    font-size: 0.9rem;
+  }
+  .faq-a-v0 {
+    padding: 0 1rem;
+    font-size: 0.85rem;
+  }
+  .faq-item-v0.open .faq-a-v0 {
+    padding: 1rem 1rem;
+  }
+
+  /* Itinerary */
+  .itinerary-item {
+    padding-left: 2.25rem;
+  }
+  .itinerary-dot {
+    left: -4px;
+    width: 10px;
+    height: 10px;
+  }
+  .itinerary-time {
+    font-size: 1rem;
+  }
+  .itinerary-text strong {
+    font-size: 0.95rem;
+  }
+  .itinerary-text span {
+    font-size: 0.85rem;
+  }
+
+  /* Journey Map */
+  .journey-map-v1 {
+    padding: 1.5rem 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .journey-svg {
+    min-width: 320px;
+  }
+
+  /* Sticky Booking Bar */
+  #sticky-booking-bar-v0 {
+    height: 60px;
+    padding: 0 0.75rem;
+  }
+  .sticky-bar-label {
+    font-size: 0.65rem;
+  }
+  .sticky-bar-price {
+    font-size: 1.1rem;
+  }
+  .sticky-booking-btn {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    border-radius: 30px;
+  }
+  .sticky-booking-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .trip-hero-v0 {
+    min-height: 80vh;
+    min-height: 80svh;
+    padding: 2rem 0;
+  }
+  .trip-page-title-v0 {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+  }
+  .trip-page-meta-v0 {
+    font-size: 0.85rem;
+  }
+}
+
+/* Fix for viewport units on mobile browsers */
+@supports (height: 100dvh) {
+  @media (max-width: 768px) {
+    .trip-hero-v0 {
+      min-height: 60dvh;
+    }
+  }
+  @media (max-width: 480px) {
+    .trip-hero-v0 {
+      min-height: 50dvh;
+    }
+  }
+}
+
+/* Safe area insets for notched devices */
+@media (max-width: 768px) {
+  .trip-hero-v0 {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  .container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  #sticky-booking-bar-v0 {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(0, env(safe-area-inset-bottom));
+  }
+}
+
