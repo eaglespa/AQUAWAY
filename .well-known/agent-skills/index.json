@@ -1,0 +1,11 @@
+{
+  "skills": [
+    {
+      "name": "BookTrip",
+      "type": "openapi",
+      "description": "Allows an agent to initiate a booking conversation on WhatsApp for a specific trip.",
+      "url": "https://www.aquaway.tours/api/skills/book-trip.json",
+      "digest": "pending"
+    }
+  ]
+}

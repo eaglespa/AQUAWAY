@@ -1,0 +1,51 @@
+{
+  "name": "Aquaway Tours Hurghada",
+  "short_name": "Aquaway",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#d4af37",
+  "description": "Premium Tours & Excursions in Hurghada. Book Orange Bay, Dolphin House, and Desert Safaris with the #1 rated operator.",
+  "icons": [
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "72x72",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "96x96",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "128x128",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "144x144",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "152x152",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "384x384",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

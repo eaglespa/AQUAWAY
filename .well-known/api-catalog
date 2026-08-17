@@ -1,0 +1,13 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.aquaway.tours/api/trips.json",
+      "service-desc": [
+        {
+          "href": "https://www.aquaway.tours/api/trips.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

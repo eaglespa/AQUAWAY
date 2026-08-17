@@ -1,0 +1,90 @@
+# robots.txt — Aquaway Tours (aquaway.tours)
+# Optimized for Google, Bing, Yandex, Applebot & Modern AI Engines (2026)
+
+User-agent: *
+Allow: /
+Allow: /api/
+Allow: /assets/
+Disallow: /admin.html
+Disallow: /admin/
+
+# Explicitly allow static assets for rendering and Google Image Search
+User-agent: Googlebot
+Allow: /
+Allow: /api/
+Allow: /assets/
+Disallow: /admin.html
+Disallow: /admin/
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Allow: /api/
+Allow: /assets/
+Disallow: /admin.html
+Disallow: /admin/
+
+User-agent: YandexBot
+Allow: /
+Allow: /api/
+Allow: /assets/
+Disallow: /admin.html
+Disallow: /admin/
+
+User-agent: Applebot
+Allow: /
+Allow: /api/
+Allow: /assets/
+Disallow: /admin.html
+Disallow: /admin/
+
+# ─── AI / LLM Search Crawlers & Autonomous Agents ─────────────────────────────
+User-agent: GPTBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin.html
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin.html
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /admin.html
+
+User-agent: YouBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin.html
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /admin.html
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin.html
+
+# ─── Sitemap & AI Knowledge Base Endpoints ────────────────────────────────────
+Sitemap: https://www.aquaway.tours/sitemap.xml

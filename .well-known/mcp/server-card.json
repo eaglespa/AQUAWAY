@@ -1,0 +1,15 @@
+{
+  "serverInfo": {
+    "name": "AquawayTours-MCP",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "sse",
+    "endpoint": "https://www.aquaway.tours/mcp/sse"
+  },
+  "capabilities": {
+    "resources": true,
+    "tools": true,
+    "prompts": false
+  }
+}

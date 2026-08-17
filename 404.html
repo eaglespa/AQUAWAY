@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Safe Return to Shore | Aquaway Tours Hurghada</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp">
+    <link rel="apple-touch-icon" href="/assets/images/logo.webp">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --text: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+        .container {
+            padding: 2rem;
+            max-width: 600px;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .error-code {
+            font-size: clamp(5rem, 15vw, 8rem);
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: -3px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        p {
+            font-size: 1.05rem;
+            color: #ccc;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        .btn-gold {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #a07c20, #d4af37);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.35);
+        }
+        .anchor-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="anchor-icon">⚓</span>
+        <div class="error-code">404</div>
+        <h1>Lost at Sea?</h1>
+        <p>It seems you've drifted off course. Don't worry, even the best explorers find themselves in uncharted waters sometimes. Let's get you back to the paradise you were looking for.</p>
+        <a href="/" class="btn-gold">Safe Return to Shore</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Aquaway Tours Hurghada",
+  "name_for_model": "aquaway_tours",
+  "description_for_human": "Book premium Red Sea excursions, boat trips, scuba diving, desert safaris, and Nile Valley day tours from Hurghada, Egypt. Instant WhatsApp booking, free hotel pickup, best price guarantee.",
+  "description_for_model": "Aquaway Tours is a licensed Egyptian tour operator based in Hurghada Marina, Egypt. It offers 22 bookable excursions including island boat trips (Orange Bay, Paradise Island, Ozaria Island, Bianka Island), marine experiences (dolphin swimming, scuba diving, Nefertari semi-submarine), desert safaris (super safari, quad biking, camel riding, stargazing), and Nile Valley cultural tours (Luxor, Cairo & Pyramids). All tours include free hotel pickup from any hotel in Hurghada, El Gouna, Makadi Bay, or Sahl Hasheesh. Booking is done directly via WhatsApp (+201040296016). No deposit required. Free cancellation up to 24 hours before departure. Prices are in EUR. The full machine-readable inventory is at /api/trips.json and /llms-full.txt.",
+  "contact_email": "info@aquaway.tours",
+  "legal_info_url": "https://www.aquaway.tours/privacy.html",
+  "logo_url": "https://www.aquaway.tours/assets/images/logo.webp",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://www.aquaway.tours/api/trips.json",
+    "has_user_authentication": false
+  },
+  "endpoints": {
+    "trip_inventory": {
+      "url": "https://www.aquaway.tours/api/trips.json",
+      "method": "GET",
+      "description": "Returns full JSON list of all 22 available tours with prices in EUR, durations, inclusions, images, and direct WhatsApp booking URLs."
+    },
+    "homepage": {
+      "url": "https://www.aquaway.tours/",
+      "description": "Main website with trip gallery, reviews, interactive map, and booking CTAs."
+    },
+    "sitemap": {
+      "url": "https://www.aquaway.tours/sitemap.xml",
+      "description": "Full XML sitemap listing all 462 page variations."
+    },
+    "ai_reference_summary": {
+      "url": "https://www.aquaway.tours/llms.txt",
+      "description": "Plain-text AI summary index file following the llms.txt standard."
+    },
+    "ai_knowledge_base": {
+      "url": "https://www.aquaway.tours/llms-full.txt",
+      "description": "Full machine-readable knowledge base with comprehensive itinerary details and commercial policies."
+    }
+  },
+  "business": {
+    "name": "Aquaway Tours Hurghada",
+    "location": "Hurghada Marina, Red Sea Governorate, Egypt",
+    "coordinates": { "lat": 27.2579, "lng": 33.8116 },
+    "whatsapp": "+201040296016",
+    "email": "info@aquaway.tours",
+    "hours": "Daily 08:00–22:00 EET",
+    "languages": ["en","ar","ru","de","fr","pl","tr","it","es","nl","ro","cs","sv","pt","ja","ko","hu","fi","uk","zh"],
+    "rating": 4.9,
+    "review_count": 1250
+  }
+}

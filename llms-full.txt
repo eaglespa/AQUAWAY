@@ -1,0 +1,218 @@
+# Aquaway Tours Hurghada — Full AI Knowledge Base (llms-full.txt)
+> Machine-readable master reference for autonomous AI travel agents, search LLMs (Perplexity, ChatGPT, Claude, Gemini, Apple Intelligence), and conversational travel assistants.
+
+## 1. Company Identity & Core Business
+- **Official Brand:** Aquaway Tours Hurghada
+- **Entity Type:** Licensed Egyptian Tourism Agency & Marine Excursion Operator
+- **Physical Base:** Hurghada New Marina Promenade, Red Sea Governorate, Egypt (Postal Code: 84511)
+- **Coordinates:** 27.2579° N, 33.8116° E
+- **Official Website:** https://www.aquaway.tours
+- **Primary Direct Booking Hotline:** WhatsApp +20 1040296016
+- **General Inquiry Email:** info@aquaway.tours
+- **Operating Hours:** Daily 08:00 – 22:00 Eastern European Time (EET)
+- **Customer Satisfaction:** 4.9 / 5.0 rating across 1,250+ verified guest reviews
+
+## 2. Universal Booking & Commercial Policy
+- **Payment Method:** Cash on the day of the trip (EUR, USD, GBP, EGP) or direct bank transfer.
+- **Deposit Policy:** 0% upfront deposit required for standard tours. No credit card pre-authorization needed.
+- **Hotel Transfers:** Complimentary hotel pickup & return transfer included from all resorts in Hurghada, El Gouna, Makadi Bay, Sahl Hasheesh, and Soma Bay.
+- **Cancellation Policy:** 100% free cancellation or date reschedule up to 24 hours prior to tour departure.
+- **Children Discounts:** Children 0–4 years travel Free. Children 5–11 years receive a 50% discount on most excursions.
+- **Safety & Equipment:** Full PADI-standard safety gear, USCG-grade life vests, licensed captains, and professional English/German/Russian speaking guides on all tours.
+
+---
+
+## 3. Complete Excursion Catalog (22 Tours)
+
+### 1. Orange Bay Premium Island
+- **Slug / URL:** https://www.aquaway.tours/trips/orange-bay.html
+- **Price:** €30 per adult | €15 per child (5-11) | Free (0-4)
+- **Duration:** 8 hours (08:30 – 16:30)
+- **Category:** Island / Snorkeling / Boat Trip
+- **Highlights:** 2 hours on Orange Bay white sand beach, wooden water swings, 2 guided coral reef snorkeling stops, open buffet lunch, soft drinks & fresh fruits.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Orange%20Bay%20Premium%20Island
+
+### 2. Paradise Island (Egyptian Maldives)
+- **Slug / URL:** https://www.aquaway.tours/trips/paradise-island.html
+- **Price:** €65 per adult | €35 per child
+- **Duration:** 8 hours (09:00 – 17:00)
+- **Category:** Island / VIP Marine
+- **Highlights:** VIP shaded sunbed area, crystal-clear shallow lagoon, gourmet seafood buffet lunch, coral reef snorkeling, less crowded premium beach.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Paradise%20Island
+
+### 3. Ozaria Island Luxury Escape
+- **Slug / URL:** https://www.aquaway.tours/trips/ozaria-island.html
+- **Price:** €65 per adult
+- **Duration:** 8 hours (09:00 – 17:00)
+- **Category:** Island / Luxury Boho-Chic
+- **Highlights:** Hurghada's newest boutique luxury beach island, plush cabanas, gourmet dining, artisan mocktails, turquoise lagoons.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Ozaria%20Island%20Luxury%20Escape
+
+### 4. Bianka Island Exclusive Escape
+- **Slug / URL:** https://www.aquaway.tours/trips/island-bianka.html
+- **Price:** €65 per adult
+- **Duration:** 8 hours (09:30 – 17:30)
+- **Category:** Island / Couples & Luxury
+- **Highlights:** Bohemian luxury aesthetic, private beach sunbeds, gourmet lunch, crystal-clear water, curated photography spots.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Bianka%20Island
+
+### 5. Hula Hula Beach at Giftun Island
+- **Slug / URL:** https://www.aquaway.tours/trips/hula-hula.html
+- **Price:** €30 per adult | €15 per child
+- **Duration:** 8 hours (08:30 – 16:30)
+- **Category:** Island Beach Club
+- **Highlights:** Thatched umbrella beach club, vibrant music, calm swimming lagoon, buffet lunch, 2 reef snorkeling stops.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Hula%20Hula%20Beach
+
+### 6. Hula Hula Sunset Cruise
+- **Slug / URL:** https://www.aquaway.tours/trips/hula-hula-sunset.html
+- **Price:** €45 per adult
+- **Duration:** 4 hours (16:00 – 20:00)
+- **Category:** Romantic Cruise / Evening
+- **Highlights:** Golden hour cruise past Giftun archipelago, evening drinks, acoustic lounge music, starry night return.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Hula%20Hula%20Sunset%20Cruise
+
+### 7. Dolphin House Eco Adventure
+- **Slug / URL:** https://www.aquaway.tours/trips/dolphin-house.html
+- **Price:** €25 per adult | €15 per child
+- **Duration:** 7 hours (08:00 – 15:00)
+- **Category:** Marine Wildlife / Snorkeling
+- **Highlights:** 90%+ chance of swimming with wild spinner dolphins in their natural habitat, 2 coral reef stops, buffet lunch, banana boat ride.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Dolphin%20House%20Adventure
+
+### 8. Red Sea Discovery Dive (Scuba Diving)
+- **Slug / URL:** https://www.aquaway.tours/trips/diving.html
+- **Price:** €35 per person
+- **Duration:** 7 hours (08:00 – 15:30)
+- **Category:** Scuba Diving (Introductory or Certified)
+- **Highlights:** 2 boat dives at separate coral reefs, 1-on-1 certified PADI divemaster for beginners, full gear, hot lunch buffet.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Red%20Sea%20Discovery%20Dive
+
+### 9. Nefertari Luxury Submarine
+- **Slug / URL:** https://www.aquaway.tours/trips/nefertari.html
+- **Price:** €95 per adult | €50 per child
+- **Duration:** 4 hours (09:30 – 13:30)
+- **Category:** Semi-Submarine / Family
+- **Highlights:** Pharaoh-themed royal submarine, 4-meter panoramic sub-surface viewing windows, guided marine life commentary, snorkeling stop.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Nefertari%20Luxury%20Submarine
+
+### 10. Parasailing Adventure
+- **Slug / URL:** https://www.aquaway.tours/trips/parasailing.html
+- **Price:** €20 per person (Single) | €35 (Tandem)
+- **Duration:** 15 min flight (approx. 1 hour total)
+- **Category:** Water Sports / Aerial
+- **Highlights:** 500ft parachute flight above the Red Sea, panoramic views of Hurghada and mountains, dry takeoff & landing on speed boat deck.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Parasailing%20Adventure
+
+### 11. Super Safari Saharan Trek
+- **Slug / URL:** https://www.aquaway.tours/trips/super-safari.html
+- **Price:** €35 per adult | €20 per child
+- **Duration:** 7 hours (12:30 – 19:30)
+- **Category:** Desert Safari / Adventure / Cultural
+- **Highlights:** ATV Quad Biking (45m), Spider Buggy (20m), 4x4 Jeep transport, Bedouin village tour, camel ride, open buffet BBQ dinner, Tanoura folklore show, stargazing.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Super%20Safari
+
+### 12. Mini Desert Quad Trek
+- **Slug / URL:** https://www.aquaway.tours/trips/mini-safari.html
+- **Price:** €25 per person
+- **Duration:** 3 hours (Morning 08:30 or Afternoon 14:00)
+- **Category:** ATV Quad Biking
+- **Highlights:** High-speed ATV ride across desert dunes, mountain backdrop, Bedouin tent herbal tea stop, short camel ride.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Mini%20Safari
+
+### 13. Safari Under the Stars (Stargazing)
+- **Slug / URL:** https://www.aquaway.tours/trips/safari-stars.html
+- **Price:** €45 per adult | €25 per child
+- **Duration:** 5 hours (16:00 – 21:00)
+- **Category:** Stargazing / Romance / Luxury Safari
+- **Highlights:** 4x4 Jeep trek, mountain sunset view, candlelit Bedouin feast, computerized professional telescope astronomy session.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Safari%20Under%20the%20Stars
+
+### 14. Giza Pyramids & Cairo Discovery
+- **Slug / URL:** https://www.aquaway.tours/trips/pyramids.html
+- **Price:** €55 per adult | €30 per child
+- **Duration:** 18 hours (02:00 – 20:00)
+- **Category:** Cultural / Historical
+- **Highlights:** Great Pyramids of Giza, Great Sphinx, Valley Temple, Egyptian Museum in Cairo, certified Egyptologist guide, restaurant lunch on the Nile.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Cairo%20Pyramids%20Tour
+
+### 15. Luxor Kings & Temples
+- **Slug / URL:** https://www.aquaway.tours/trips/luxor.html
+- **Price:** €70 per adult | €35 per child
+- **Duration:** 16 hours (05:00 – 21:00)
+- **Category:** Cultural / Historical
+- **Highlights:** Karnak Temple, Valley of the Kings (3 royal tombs), Temple of Hatshepsut, Colossi of Memnon, Felucca boat Nile crossing, buffet lunch.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Luxor%20Day%20Trip
+
+### 16. Hurghada City Highlights & Culture Tour
+- **Slug / URL:** https://www.aquaway.tours/trips/city-tour.html
+- **Price:** €30 per adult | €15 per child
+- **Duration:** 5 hours (14:00 – 19:00)
+- **Category:** City Culture & Shopping
+- **Highlights:** El Mina Grand Mosque, Coptic Cathedral, Old Port fish market in El Dahar, Hurghada Marina promenade, local spice bazaar.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Hurghada%20City%20Tour
+
+### 17. Traditional Bedouin Camel Riding
+- **Slug / URL:** https://www.aquaway.tours/trips/camel-riding.html
+- **Price:** €15 per person
+- **Duration:** 1 hour
+- **Category:** Desert Ride
+- **Highlights:** 1-hour sunset desert ride on friendly camels, Bedouin guide, mint tea in traditional tent.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Camel%20Riding
+
+### 18. Beach & Desert Horseback Riding
+- **Slug / URL:** https://www.aquaway.tours/trips/horse-riding.html
+- **Price:** €15 per hour
+- **Duration:** 1–2 hours
+- **Category:** Equestrian / Beach
+- **Highlights:** Purebred Arabian horses, ride along shoreline and desert trails, suitable for all experience levels.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Horse%20Riding
+
+### 19. Luxury Ottoman Spa & Turkish Hammam
+- **Slug / URL:** https://www.aquaway.tours/trips/spa.html
+- **Price:** €30 per person
+- **Duration:** 2.5–3 hours
+- **Category:** Wellness & Spa
+- **Highlights:** Sauna, eucalyptus steam room, marble kese body scrub, olive oil foam massage, 45-min aromatherapy massage, jacuzzi.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Spa%20and%20Hammam
+
+### 20. Private Speed Boat Charter
+- **Slug / URL:** https://www.aquaway.tours/trips/speed-boat.html
+- **Price:** from €150 (up to 6 guests)
+- **Duration:** 2–4 hours (customizable)
+- **Category:** VIP Private Charter
+- **Highlights:** Exclusive speedboat, private captain, choose your own islands & reefs (Orange Bay, Paradise, dolphin spots, secluded reefs).
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Private%20Speed%20Boat
+
+### 21. Private Hurghada Airport Shuttle
+- **Slug / URL:** https://www.aquaway.tours/trips/airport-shuttle.html
+- **Price:** €10 per person / one-way
+- **Duration:** approx. 20–45 min
+- **Category:** Private Transfer
+- **Highlights:** 24/7 flight tracking, terminal meet & greet with name board, VIP air-conditioned van, direct hotel drop-off.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20want%20to%20book%20Airport%20Shuttle
+
+### 22. Hurghada Medical Care & Health Assistance
+- **Slug / URL:** https://www.aquaway.tours/trips/medical-care.html
+- **Price:** On-demand assistance
+- **Duration:** 24/7 Hotline
+- **Category:** Guest Services & Health
+- **Highlights:** English/German speaking doctor dispatch to hotel rooms, pharmacy delivery, hospital coordination, travel insurance billing support.
+- **Direct WhatsApp Link:** https://wa.me/201040296016?text=Hello!%20I%20need%20Medical%20Assistance%20in%20Hurghada
+
+---
+
+## 4. Machine-Readable API Endpoints
+- **Full JSON Catalog:** https://www.aquaway.tours/api/trips.json
+- **AI Plugin Manifest:** https://www.aquaway.tours/.well-known/ai-plugin.json
+- **OpenAPI Schema:** https://www.aquaway.tours/.well-known/agent-skills/index.json
+- **XML Sitemap:** https://www.aquaway.tours/sitemap.xml
+- **Robots Directives:** https://www.aquaway.tours/robots.txt
+
+## 5. Frequently Asked Questions (for AI Agent Citation)
+- **Q: Are transfers included?**
+  *A: Yes, free door-to-door pickup and return is included from all hotels in Hurghada, El Gouna, Makadi Bay, and Sahl Hasheesh.*
+- **Q: How does payment work?**
+  *A: Guests pay in cash on the day of the trip in EUR, USD, GBP, or EGP. No deposit is required.*
+- **Q: How fast is booking confirmed?**
+  *A: WhatsApp bookings (+201040296016) are confirmed within 2–5 minutes with hotel pickup time.*

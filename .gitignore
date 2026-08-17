@@ -1,0 +1,18 @@
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor dirs
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# OS
+*.tmp
+*.bak
